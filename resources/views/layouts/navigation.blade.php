@@ -24,7 +24,7 @@
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-file"></i>
                     <p>
-                        Instructional Material
+                        IMs
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
@@ -37,23 +37,23 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="manage_material" class="nav-link">
+                        <a href="manage_masterlist" class="nav-link">
                             <i class="fas fa-book"></i>
                             <p>Masterlist</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="manage_author" class="nav-link">
+                        <a href="manage_authors" class="nav-link">
                             <i class="fas fa-users"></i>
                             <p>Authors</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="manage_category" class="nav-link">
+                        <a href="manage_categories" class="nav-link">
                             <i class="fas fa-table"></i>
-                            <p>Category</p>
+                            <p>Categories</p>
                         </a>
                     </li>
                 </ul>
@@ -69,14 +69,14 @@
                 </a>
                 <ul class="nav nav-treeview" style="display: none;">
                     <li class="nav-item">
-                        <a href="manage_batches" class="nav-link">
+                        <a href="#" class="nav-link">
                             <i class="fas fa-tag"></i>
                             <p>New Purchase</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="manage_material" class="nav-link">
+                        <a href="#" class="nav-link">
                             <i class="fas fa-chart-pie mr-1"></i>
                             <p>Generate Reports</p>
                         </a>
@@ -86,7 +86,7 @@
 
 
             <li class="nav-item">
-                <a href="manage_employee" class="nav-link">
+                <a href="manage_employees" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
                     <p>
                         Employee Accounts

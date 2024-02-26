@@ -31,22 +31,22 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/manage_material', function () {
-    return view('instructional_material.manage_material');
-})->name('manage_material');
+Route::get('/manage_masterlist', function () {
+    return view('instructional_materials.manage_masterlist');
+})->name('manage_masterlist');
 
 Route::get('/manage_batches', function () {
-    return view('instructional_material.manage_batches');
+    return view('instructional_materials.manage_batches');
 })->name('manage_batches');
 
-Route::get('/manage_author', function () {
-    return view('instructional_material.manage_author');
-})->name('manage_author');
+Route::get('/manage_authors', function () {
+    return view('instructional_materials.manage_authors');
+})->name('manage_authors');
 
-Route::get('/manage_category', function () {
-    return view('instructional_material.manage_category');
-})->name('manage_category');
+Route::get('/manage_categories', function () {
+    return view('instructional_materials.manage_categories');
+})->name('manage_categories');
 
-Route::get('/manage_employee', function () {
-    return view('employee_management.manage_employee');
-})->name('managa_employee');
+Route::get('/manage_employees', function () {
+    return view('employee_management.manage_employees');
+})->name('manage_employees');

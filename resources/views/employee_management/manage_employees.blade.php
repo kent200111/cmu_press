@@ -10,7 +10,7 @@
     <div class="card-body">
 
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
-            <i class="fas fa-plus"></i> Add Category
+            <i class="fas fa-plus"></i> Add Employee
         </button>
 
         <!-- Modal form -->
@@ -18,7 +18,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Category</h4>
+                        <h4 class="modal-title">Add Employee</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -31,26 +31,62 @@
 
                                     <!-- start page -->
 
-                                       
+                                    <!-- Form aligned to the left -->
+
+                                    <div class="row">
+                                        <!-- Form aligned to the left -->
+                                        <div class="col-md-6">
                                             <form>
                                                 <div class="card-body">
 
                                                     <div class="form-group">
-                                                        <label for="name">Category Name</label>
+                                                        <label for="name">First Name</label>
                                                         <input type="text" class="form-control" id="name"
                                                             placeholder="Enter First Name" required>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="description">Description</label>
-                                                        <textarea class="form-control" id="description"
-                                                            placeholder="Enter Description" style="height: 100px;"
-                                                            oninput="updateWordsDisplay() "></textarea>
+                                                        <label for="name">Middle Name</label>
+                                                        <input type="text" class="form-control" id="name"
+                                                            placeholder="Enter Midlle Name" required>
                                                     </div>
+
+                                                    <div class="form-group">
+                                                        <label for="name">Last Name</label>
+                                                        <input type="text" class="form-control" id="name"
+                                                            placeholder="Enter Last Name" required>
+                                                    </div>
+
+
 
                                                 </div>
                                             </form>
-                                        
+                                        </div>
+
+                                        <!-- Form aligned to the right -->
+                                        <div class="col-md-6">
+                                            <form>
+                                                <div class="card-body">
+
+                                                <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input type="text" class="form-control" id="email"
+                                                            placeholder="Enter Email" required>
+                                                    </div>
+
+
+                                                <div class="form-group">
+                                                        <label>Status</label>
+                                                        <select class="form-control select2" style="width: 100%;" required>
+                                                            <option>On leave</option>
+                                                            <option>active</option>
+                                                            <option>Fired</option>
+                                                        </select>
+                                                    </div>                                                  
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                     <!-- /.card-body -->
 
 
@@ -75,18 +111,17 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Manage Author</h3>
+                <h3 class="card-title">Manage Employees</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Category Name</th>
-                            <th>Description</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                            <th>Actions</th>
+                            <th>Employee Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,7 +132,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -112,7 +146,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -126,8 +159,7 @@
                             <td>Internet
                                 Explorer 5.0
                             </td>
-                            <td>5</td>
-                            <td>5</td>
+                            <td>Win 95+</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -141,8 +173,7 @@
                             <td>Internet
                                 Explorer 5.0
                             </td>
-                            <td>5</td>
-                            <td>5</td>
+                            <td>Win 95+</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -156,8 +187,7 @@
                             <td>Internet
                                 Explorer 5.0
                             </td>
-                            <td>5</td>
-                            <td>5</td>
+                            <td>Win 95+</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -172,7 +202,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -186,21 +215,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -214,7 +228,19 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
+                            <td class="text-center">
+                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
+                                        class="material-icons">&#xE254;</i></a>
+                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
+                                        class="material-icons">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Gecko</td>
+                            <td>Internet
+                                Explorer 5.0
+                            </td>
+                            <td>Win 95+</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>

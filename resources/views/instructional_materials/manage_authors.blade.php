@@ -110,7 +110,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Manage Author</h3>
+                <h3 class="card-title">Manage Authors</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -120,9 +120,7 @@
                             <th>Author Name</th>
                             <th>Gender</th>
                             <th>Department</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                            <th>Actions</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -133,8 +131,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -149,8 +145,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -165,8 +159,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -181,8 +173,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -197,8 +187,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -213,8 +201,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -228,8 +214,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -243,8 +227,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
@@ -258,8 +240,6 @@
                                 Explorer 5.0
                             </td>
                             <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
                             <td class="text-center">
                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
                                         class="material-icons">&#xE254;</i></a>
