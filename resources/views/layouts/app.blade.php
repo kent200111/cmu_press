@@ -250,9 +250,6 @@ $(document).ready(function(){
 <script src="admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
-
-
-
 <script>
   $(function () {
     //Initialize Select2 Elements
