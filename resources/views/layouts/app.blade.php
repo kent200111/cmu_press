@@ -169,10 +169,6 @@ $(document).ready(function(){
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
-
-
-@vite('resources/js/app.js')
 <!-- AdminLTE App -->
 
 @yield('scripts')
