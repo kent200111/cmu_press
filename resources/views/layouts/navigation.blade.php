@@ -32,28 +32,28 @@
                 <ul class="nav nav-treeview" style="display: none;">
                     <li class="nav-item">
                         <a href="manage_batches" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="fas fa-copy"></i>
                             <p>Batches</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="manage_material" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="fas fa-book"></i>
                             <p>Masterlist</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="manage_author" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
+                        <i class="fas fa-users"></i>
                             <p>Authors</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="manage_category" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="fas fa-table"></i>
                             <p>Category</p>
                         </a>
                     </li>
@@ -71,14 +71,14 @@
                 <ul class="nav nav-treeview" style="display: none;">
                     <li class="nav-item">
                         <a href="manage_batches" class="nav-link">
-                        <i class="nav-icon fas fa-tag"></i>
+                        <i class="fas fa-tag"></i>
                             <p>New Purchase</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="manage_material" class="nav-link">
-                        <i class="nav-icon fas fa-chart-pie mr-1"></i>
+                        <i class="fas fa-chart-pie mr-1"></i>
                             <p>Generate Reports</p>
                         </a>
                     </li>

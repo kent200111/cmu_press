@@ -256,7 +256,7 @@ $(document).ready(function(){
 <script src="admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 
 <script>
@@ -411,29 +411,6 @@ $(document).ready(function(){
     });
   });
 </script>
-
-<script>
-    $(document).ready(function () {
-        // Get the current URL path and extract the last segment
-        var url = window.location.pathname;
-        var activePage = url.substring(url.lastIndexOf('/') + 1);
-
-        // Iterate over each nav item
-        $('.nav-link').each(function () {
-            // Get the href attribute of the link
-            var link = $(this).attr('href');
-
-            // Check if the current page is the same as the link
-            if (activePage === link) {
-                // Add the 'active' class to the parent nav-item and its ancestor nav-treeview
-                $(this).closest('.nav-item').addClass('menu-open');
-                $(this).addClass('active');
-                $(this).parents('.nav-treeview').addClass('menu-open');
-            }
-        });
-    });
-</script>
-
 
 </body>     
 </html>

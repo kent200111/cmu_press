@@ -46,3 +46,7 @@ Route::get('/manage_author', function () {
 Route::get('/manage_category', function () {
     return view('instructional_material.manage_category');
 })->name('manage_category');
+
+Route::get('/manage_employee', function () {
+    return view('employee_management.manage_employee');
+})->name('managa_employee');
