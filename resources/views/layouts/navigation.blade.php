@@ -44,11 +44,12 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="manage_authors" class="nav-link">
+                        <a href="{{ route('authors.manage') }}" class="nav-link">
                             <i class="fas fa-users"></i>
                             <p>Authors</p>
                         </a>
                     </li>
+
 
                     <li class="nav-item">
                         <a href="manage_categories" class="nav-link">
