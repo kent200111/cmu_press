@@ -389,43 +389,6 @@
     }
     // DropzoneJS Demo Code End
   </script>
-
-  <script>
-    $(function () {
-      $.ajax({
-        url: "{{ route('authors.fetch') }}",
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
-          var tbody = $('#authors-table tbody');
-          tbody.empty();
-          data.forEach(function (author) {
-            var row = $('<tr>');
-            row.append('<td>' + author.first_name + ' ' + (author.middle_name ? author.middle_name + ' ' : '') + author.last_name + '</td>');
-            row.append('<td class="text-center">' +
-              '<a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>' +
-              '<a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
-              '</td>');
-            tbody.append(row);
-          });
-          $('#authors-table').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": false,
-            "info": true,
-            "autoWidth": true,
-            "responsive": false,
-            "buttons": ["copy", "excel", "pdf", "print"],
-            "pageLength": 8
-          }).buttons().container().appendTo('#authors-table_wrapper .col-md-6:eq(0)');
-        },
-        error: function (xhr, status, error) {
-          console.error(xhr.responseText);
-        }
-      });
-    });
-  </script>
 </body>
 
 </html>
