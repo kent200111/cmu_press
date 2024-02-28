@@ -1,20 +1,23 @@
+@extends('layouts.app')
+@section('content')
 <html>
     <head>
         <title>Manage Authors</title>
         <link rel="stylesheet" href="admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
         <link rel="stylesheet" href="admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     </head>
-    @extends('layouts.app')
-    @section('content')
     <body>
+
         <div class="card-body">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#author-modal">
+            <a class="btn btn-primary" onClick="showAddAuthorModal()" href="javascript:void(0)">
                 <i class="fas fa-plus"></i> Add Author
-            </button>
+            </a>
         </div>
         <div class="container-fluid">
             <div class="card">
@@ -22,7 +25,8 @@
                     <h3 class="card-title">Manage Authors</h3>
                 </div>
                 <div class="card-body">
-                    <table id="authors-table" class="table table-bordered table-striped">
+                    <!-- AUTHORS TABLE -->
+                    <table id="AuthorsTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Author Name</th>
@@ -32,87 +36,162 @@
                         <tbody>
                         </tbody>
                     </table>
+                    <!-- AUTHORS TABLE -->
                 </div>
             </div>
         </div>
-        <form method="post" class="modal fade" id="author-modal"> 
-            @csrf
+
+        <!-- ADD AUTHOR MODAL -->
+        <div id="AddAuthorModal" class="modal fade"> 
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Add Author</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <a class="close" onClick="hideAddAuthorModal()" href="javascript:void(0)">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </a>
                     </div>
                     <div class="modal-body">
-                        <div class="container-fluid">
-                            <div class="card card-default">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="first_name">First Name</label>
-                                                <input type="text" class="form-control" id="first_name" name="first_name"
-                                                    placeholder="Enter First Name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="middle_name">Middle Name</label>
-                                                <input type="text" class="form-control" id="middle_name" name="middle_name"
-                                                    placeholder="Enter Middle Name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="last_name">Last Name</label>
-                                                <input type="text" class="form-control" id="last_name" name="last_name"
-                                                    placeholder="Enter Last Name" required>
+                        <!-- ADD AUTHOR FORM -->
+                        <form id="AddAuthorForm" method="POST" action="{{ route('authors.store') }}">
+                            @csrf
+                            <div class="container-fluid">
+                                <div class="card card-default">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="first_name">First Name</label>
+                                                    <input type="text" class="form-control" name="first_name"
+                                                        placeholder="Enter First Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="middle_name">Middle Name</label>
+                                                    <input type="text" class="form-control" name="middle_name"
+                                                        placeholder="Enter Middle Name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="last_name">Last Name</label>
+                                                    <input type="text" class="form-control" name="last_name"
+                                                        placeholder="Enter Last Name" required>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" onClick="hideAddAuthorModal()" href="javascript:void(0)">Close</button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div id="success-modal" class="modal fade" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Success!</h5>
-                    </div>
-                    <div class="modal-body">
-                        </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                        </form>
+                        <!-- ADD AUTHOR FORM -->
                     </div>
                 </div>
             </div>
         </div>
+        <!-- ADD AUTHOR MODAL -->
+
+         <!-- EDIT AUTHOR MODAL -->
+         <div id="EditAuthorModal" class="modal fade"> 
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Author</h4>
+                        <a class="close" onClick="hideEditAuthorModal()" href="javascript:void(0)">
+                            <span aria-hidden="true">&times;</span>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <!-- EDIT AUTHOR FORM -->
+                        <form id="EditAuthorForm" method="POST" action="">
+                            @csrf
+                            <input type="hidden" id="AuthorId" name="author_id">
+                            <div class="container-fluid">
+                                <div class="card card-default">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="first_name">First Name</label>
+                                                    <input type="text" class="form-control" id="FirstName" name="first_name"
+                                                        placeholder="Enter First Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="middle_name">Middle Name</label>
+                                                    <input type="text" class="form-control" id="MiddleName" name="middle_name"
+                                                        placeholder="Enter Middle Name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="last_name">Last Name</label>
+                                                    <input type="text" class="form-control" id="LastName" name="last_name"
+                                                        placeholder="Enter Last Name" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" onClick="hideEditAuthorModal()" href="javascript:void(0)">Close</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- EDIT AUTHOR FORM -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- EDIT AUTHOR MODAL -->
+
         <script>
+            function showAddAuthorModal() {
+                jQuery('#AddAuthorModal').modal('show');
+            }
+            function hideAddAuthorModal() {
+                jQuery('#AddAuthorModal').modal('hide');
+            }
+            function showEditAuthorModal(authorId) {
+                $.ajax({
+                    url: "{{ route('authors.edit', ':id') }}".replace(':id', authorId),
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (author) {
+                        $('#EditAuthorModal #AuthorId').val(author.id);
+                        $('#EditAuthorModal #FirstName').val(author.first_name);
+                        $('#EditAuthorModal #MiddleName').val(author.middle_name);
+                        $('#EditAuthorModal #LastName').val(author.last_name);
+                        $('#EditAuthorModal').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+            function hideEditAuthorModal() {
+                jQuery('#EditAuthorModal').modal('hide');
+            }
+
+
             $(function () {
-                function index() {
+                function fetchAuthors() {
                     $.ajax({
-                        url: "{{ route('author.index') }}",
+                        url: "{{ route('authors.index') }}",
                         type: 'GET',
                         dataType: 'json',
                         success: function (data) {
-                            var tbody = $('#authors-table tbody');
+                            var tbody = $('#AuthorsTable tbody');
                             tbody.empty();
                             data.forEach(function (author) {
                                 var row = $('<tr>');
                                 row.append('<td>' + author.first_name + ' ' + (author.middle_name ? author.middle_name + ' ' : '') + author.last_name + '</td>');
                                 row.append('<td class="text-center">' +
-                                '<a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>' +
-                                '<a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>' +
-                                '</td>');
+                                    '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' + author.id + '" onclick="showEditAuthorModal(' + author.id + ')"><i class="material-icons">&#xE254;</i></a>' +
+                                    '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' + author.id + '"><i class="material-icons">&#xE872;</i></a>' +
+                                    '</td>');
                                 tbody.append(row);
                             });
-                            $('#authors-table').DataTable({
+                            $('#AuthorsTable').DataTable({
                                 "paging": true,
                                 "lengthChange": false,
                                 "searching": true,
@@ -122,16 +201,24 @@
                                 "responsive": false,
                                 "buttons": ["copy", "excel", "pdf", "print"],
                                 "pageLength": 8
-                            }).buttons().container().appendTo('#authors-table_wrapper .col-md-6:eq(0)');
+                            }).buttons().container().appendTo('#AuthorsTable_wrapper .col-md-6:eq(0)');
                         },
                         error: function (xhr, status, error) {
                             console.error(xhr.responseText);
                         }
                     });
                 }
-                index();
+                fetchAuthors();
+
+
+               
+
+
             });
+
+
+            
         </script>
     </body>
-    @endsection
 </html>
+@endsection

@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AuthorController extends Controller
 {
     public function index()
     {
         if (request()->ajax()) {
-            $authors = Author::all();
+            $authors = Author::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
             return response()->json($authors);
         } else {
-            $authors = Author::all();
+            $authors = Author::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
             return view('instructional_materials.manage_authors', ['authors' => $authors]);
         }
     }
@@ -27,31 +28,21 @@ class AuthorController extends Controller
         $author->middle_name = $request->input('middle_name');
         $author->last_name = $request->input('last_name');
         $author->save();
-        return redirect()->route('author.index');
+        return redirect()->route('authors.index');
     }
-
-
-
-
-
-
-
     public function show(Author $author)
     {
-        return view('instructional_materials.show_author', ['author' => $author]);
     }
     public function edit(Author $author)
-    {
-        return view('instructional_materials.edit_author', ['author' => $author]);
+    { 
+        return response()->json($author);
     }
     public function update(Request $request, Author $author)
     {
-        $author->save();
-        return redirect()->route('author.index')->with('success', 'Author updated.');
+        $author->update($request->all());
+        return redirect()->route('authors.index');
     }
     public function destroy(Author $author)
     {
-        $author->delete();
-        return redirect()->route('author.index')->with('success', 'Author deleted.');
     }
 }

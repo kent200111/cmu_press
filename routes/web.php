@@ -25,4 +25,4 @@ Route::get('/manage_categories', function () {
 Route::get('/manage_employees', function () {
     return view('employee_management.manage_employees');
 })->name('manage_employees');
-Route::resource('author', AuthorController::class);
+Route::resource('authors', AuthorController::class);

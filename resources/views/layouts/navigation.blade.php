@@ -44,7 +44,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('author.index') }}" class="nav-link">
+                        <a href="{{ route('authors.index') }}" class="nav-link">
                             <i class="fas fa-users"></i>
                             <p>Authors</p>
                         </a>
