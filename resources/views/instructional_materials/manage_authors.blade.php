@@ -104,8 +104,9 @@
                     </div>
                     <div class="modal-body">
                         <!-- EDIT AUTHOR FORM -->
-                        <form id="EditAuthorForm" method="POST" action="">
+                        <form id="EditAuthorForm" method="POST">
                             @csrf
+                            @method('PUT') <!-- Use PUT method for update -->
                             <input type="hidden" id="AuthorId" name="author_id">
                             <div class="container-fluid">
                                 <div class="card card-default">
@@ -168,53 +169,88 @@
                     }
                 });
             }
+
             function hideEditAuthorModal() {
                 jQuery('#EditAuthorModal').modal('hide');
             }
 
 
-            $(function () {
-                function fetchAuthors() {
-                    $.ajax({
-                        url: "{{ route('authors.index') }}",
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function (data) {
-                            var tbody = $('#AuthorsTable tbody');
-                            tbody.empty();
-                            data.forEach(function (author) {
-                                var row = $('<tr>');
-                                row.append('<td>' + author.first_name + ' ' + (author.middle_name ? author.middle_name + ' ' : '') + author.last_name + '</td>');
-                                row.append('<td class="text-center">' +
+
+    
+
+            $('#EditAuthorForm').submit(function (event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                var authorId = $('#AuthorId').val(); // Get the author ID
+                $.ajax({
+                    url: "{{ route('authors.update', ':id') }}".replace(':id', authorId),
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        console.log(response);
+                        hideEditAuthorModal();
+                        // After successful update, refresh the table data
+                        refreshAuthorsTable();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+
+
+
+
+
+
+            $(document).ready(function () {
+                // Initialize DataTable
+                $('#AuthorsTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": false,
+                    "info": true,
+                    "autoWidth": true,
+                    "responsive": false,
+                    "buttons": ["copy", "excel", "pdf", "print"],
+                    "pageLength": 8
+                }).buttons().container().appendTo('#AuthorsTable_wrapper .col-md-6:eq(0)');
+
+                // Call the function to fetch and populate data in the table
+                refreshAuthorsTable();
+            });
+
+
+
+            function refreshAuthorsTable() {
+                $.ajax({
+                    url: "{{ route('authors.index') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        var table = $('#AuthorsTable').DataTable();
+                        var existingRows = table.rows().remove().draw(false);
+
+                        // Add the updated data to the table
+                        data.forEach(function (author) {
+                            table.row.add([
+                                author.first_name + ' ' + (author.middle_name ? author.middle_name + ' ' : '') + author.last_name,
+                                '<div class="text-center">' +
                                     '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' + author.id + '" onclick="showEditAuthorModal(' + author.id + ')"><i class="material-icons">&#xE254;</i></a>' +
                                     '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' + author.id + '"><i class="material-icons">&#xE872;</i></a>' +
-                                    '</td>');
-                                tbody.append(row);
-                            });
-                            $('#AuthorsTable').DataTable({
-                                "paging": true,
-                                "lengthChange": false,
-                                "searching": true,
-                                "ordering": false,
-                                "info": true,
-                                "autoWidth": true,
-                                "responsive": false,
-                                "buttons": ["copy", "excel", "pdf", "print"],
-                                "pageLength": 8
-                            }).buttons().container().appendTo('#AuthorsTable_wrapper .col-md-6:eq(0)');
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                        }
-                    });
-                }
-                fetchAuthors();
+                                '</div>'
+                            ]);
+                        });
 
-
-               
-
-
-            });
+                        table.draw(); // Redraw the table with the updated data
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+         
 
 
             

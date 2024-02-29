@@ -10,17 +10,19 @@ class AuthorController extends Controller
 {
     public function index()
     {
+        $authors = Author::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
         if (request()->ajax()) {
-            $authors = Author::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
             return response()->json($authors);
         } else {
-            $authors = Author::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
-            return view('instructional_materials.manage_authors', ['authors' => $authors]);
+            return view('instructional_materials.manage_authors');
         }
     }
+
     public function create()
     {
     }
+
+
     public function store(Request $request)
     {
         $author = new Author();
@@ -32,11 +34,13 @@ class AuthorController extends Controller
     }
     public function show(Author $author)
     {
+        return response()->json($author);
     }
     public function edit(Author $author)
     { 
         return response()->json($author);
     }
+    
     public function update(Request $request, Author $author)
     {
         $author->update($request->all());
