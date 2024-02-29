@@ -8,8 +8,8 @@ return new class extends Migration {
     {
         Schema::create('im_authors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('im_id')->constrained('ims')->onDelete('cascade');
-            $table->foreignId('author_id')->constrained('authors')->onDelete('cascade');
+            $table->foreignId('im_id')->constrained('ims');
+            $table->foreignId('author_id')->constrained('authors');
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->string('code')->unique();
             $table->string('title');
             $table->string('college')->nullable();
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories');
             $table->string('publisher')->nullable();
             $table->string('edition')->nullable();
             $table->string('isbn')->nullable();

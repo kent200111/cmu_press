@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Models\Author;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class AuthorController extends Controller
 {
     public function index()
@@ -72,5 +74,7 @@ class AuthorController extends Controller
     }
     public function destroy(Author $author)
     {
+        $author->delete();
+        return response()->json(['success' => 'Author deleted successfully.']);
     }
 }

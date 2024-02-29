@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <html>
+
 <head>
     <title>Manage Authors</title>
     <link rel="stylesheet" href="admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -11,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
+
 <body>
     <div class="card-body">
         <a class="btn btn-primary" onClick="showAddAuthorModal()" href="javascript:void(0)">
@@ -44,9 +46,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Author</h4>
-                    <a class="close" onClick="hideAddAuthorModal()" href="javascript:void(0)">
-                        <span aria-hidden="true">&times;</span>
-                    </a>
                 </div>
                 <div class="modal-body">
                     <!-- ADD AUTHOR FORM -->
@@ -78,7 +77,7 @@
                             </div>
                             <div class="text-right">
                                 <button type="button" class="btn btn-danger" onClick="hideAddAuthorModal()"
-                                    href="javascript:void(0)">Close</button>
+                                    href="javascript:void(0)">Cancel</button>
                                 <button type="submit" class="btn btn-primary">Add</button>
                             </div>
                         </div>
@@ -95,9 +94,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Author</h4>
-                    <a class="close" onClick="hideEditAuthorModal()" href="javascript:void(0)">
-                        <span aria-hidden="true">&times;</span>
-                    </a>
                 </div>
                 <div class="modal-body">
                     <!-- EDIT AUTHOR FORM -->
@@ -131,7 +127,7 @@
                             </div>
                             <div class="text-right">
                                 <button type="button" class="btn btn-danger" onClick="hideEditAuthorModal()"
-                                    href="javascript:void(0)">Close</button>
+                                    href="javascript:void(0)">Cancel</button>
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </div>
@@ -142,6 +138,25 @@
         </div>
     </div>
     <!-- EDIT AUTHOR MODAL -->
+    <!-- DELETE AUTHOR MODAL -->
+    <div class="modal fade" id="DeleteAuthorModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Author</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this author?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="hideDeleteAuthorModal()"
+                        href="javascript:void(0)">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="DeleteAuthor">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DELETE AUTHOR MODAL -->
     <!-- SUCCESS MODALS -->
     <div class="modal fade" id="SuccessAdd" tabindex="-1" role="dialog" aria-labelledby="SuccessAddLabel"
         aria-hidden="true">
@@ -163,46 +178,108 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="SuccessDelete" tabindex="-1" role="dialog" aria-labelledby="SuccessDeleteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="SuccessDeleteLabel">Author Deleted Successfully!</h5>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- SUCCESS MODALS -->
     <script>
-        function showAddAuthorModal() {
-            $('#AddAuthorModal').modal('show');
-        }
-        function hideAddAuthorModal() {
-            $('#AddAuthorForm')[0].reset();
-            $('#AddAuthorModal').modal('hide');
-        }
-        function showEditAuthorModal(authorId) {
+    function showAddAuthorModal() {
+        $('#AddAuthorModal').modal('show');
+    }
+
+    function hideAddAuthorModal() {
+        $('#AddAuthorForm')[0].reset();
+        $('#AddAuthorModal').modal('hide');
+    }
+
+    function showEditAuthorModal(authorId) {
+        $.ajax({
+            url: "{{ route('authors.edit', ':id') }}".replace(':id', authorId),
+            type: 'GET',
+            dataType: 'json',
+            success: function(author) {
+                $('#EditAuthorModal #AuthorId').val(author.id);
+                $('#EditAuthorModal #FirstName').val(author.first_name);
+                $('#EditAuthorModal #MiddleName').val(author.middle_name);
+                $('#EditAuthorModal #LastName').val(author.last_name);
+                $('#EditAuthorModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+    function hideEditAuthorModal() {
+        $('#EditAuthorModal').modal('hide');
+    }
+
+    function showDeleteAuthorModal() {
+        $('#DeleteAuthorModal').modal('show');
+    }
+
+    function hideDeleteAuthorModal() {
+        $('#DeleteAuthorModal').modal('hide');
+    }
+    $('#AddAuthorForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            url: "{{ route('authors.store') }}",
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                hideAddAuthorModal();
+                $('#SuccessAdd').modal('show');
+                refreshAuthorsTable();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+    $('#EditAuthorForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        var authorId = $('#AuthorId').val();
+        $.ajax({
+            url: "{{ route('authors.update', ':id') }}".replace(':id', authorId),
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                hideEditAuthorModal();
+                $('#SuccessUpdate').modal('show');
+                refreshAuthorsTable();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+    $('#AuthorsTable').on('click', '.delete', function(event) {
+        event.preventDefault();
+        var authorId = $(this).data('id');
+        showDeleteAuthorModal();
+        $('#DeleteAuthor').off().on('click', function() {
             $.ajax({
-                url: "{{ route('authors.edit', ':id') }}".replace(':id', authorId),
-                type: 'GET',
-                dataType: 'json',
-                success: function(author) {
-                    $('#EditAuthorModal #AuthorId').val(author.id);
-                    $('#EditAuthorModal #FirstName').val(author.first_name);
-                    $('#EditAuthorModal #MiddleName').val(author.middle_name);
-                    $('#EditAuthorModal #LastName').val(author.last_name);
-                    $('#EditAuthorModal').modal('show');
+                url: "{{ route('authors.destroy', ':id') }}".replace(':id', authorId),
+                type: 'DELETE',
+                data: {
+                    "_token": "{{ csrf_token() }}"
                 },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        }
-        function hideEditAuthorModal() {
-            $('#EditAuthorModal').modal('hide');
-        }
-        $('#AddAuthorForm').submit(function(event) {
-            event.preventDefault();
-            var formData = $(this).serialize();
-            $.ajax({
-                url: "{{ route('authors.store') }}",
-                type: 'POST',
-                data: formData,
                 success: function(response) {
                     console.log(response);
-                    hideAddAuthorModal();
-                    $('#SuccessAdd').modal('show');
+                    hideDeleteAuthorModal();
+                    $('#SuccessDelete').modal('show');
                     refreshAuthorsTable();
                 },
                 error: function(xhr, status, error) {
@@ -210,69 +287,53 @@
                 }
             });
         });
-        $('#EditAuthorForm').submit(function(event) {
-            event.preventDefault();
-            var formData = $(this).serialize();
-            var authorId = $('#AuthorId').val();
-            $.ajax({
-                url: "{{ route('authors.update', ':id') }}".replace(':id', authorId),
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    console.log(response);
-                    hideEditAuthorModal();
-                    $('#SuccessUpdate').modal('show');
-                    refreshAuthorsTable();
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
+    });
+
+    function refreshAuthorsTable() {
+        $.ajax({
+            url: "{{ route('authors.index') }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var table = $('#AuthorsTable').DataTable();
+                var existingRows = table.rows().remove().draw(false);
+                data.forEach(function(author) {
+                    table.row.add([
+                        author.first_name + ' ' + (author.middle_name ? author
+                            .middle_name +
+                            ' ' : '') + author.last_name,
+                        '<div class="text-center">' +
+                        '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
+                        author.id + '" onclick="showEditAuthorModal(' + author.id +
+                        ')"><i class="material-icons">&#xE254;</i></a>' +
+                        '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' +
+                        author.id + '"><i class="material-icons">&#xE872;</i></a>' +
+                        '</div>'
+                    ]);
+                });
+                table.draw();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
         });
-        function refreshAuthorsTable() {
-            $.ajax({
-                url: "{{ route('authors.index') }}",
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var table = $('#AuthorsTable').DataTable();
-                    var existingRows = table.rows().remove().draw(false);
-                    data.forEach(function(author) {
-                        table.row.add([
-                            author.first_name + ' ' + (author.middle_name ? author
-                                .middle_name +
-                                ' ' : '') + author.last_name,
-                            '<div class="text-center">' +
-                            '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
-                            author.id + '" onclick="showEditAuthorModal(' + author.id +
-                            ')"><i class="material-icons">&#xE254;</i></a>' +
-                            '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' +
-                            author.id + '"><i class="material-icons">&#xE872;</i></a>' +
-                            '</div>'
-                        ]);
-                    });
-                    table.draw();
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        }
-        $(document).ready(function() {
-            $('#AuthorsTable').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": false,
-                "info": true,
-                "autoWidth": true,
-                "responsive": false,
-                "buttons": ["copy", "excel", "pdf", "print"],
-                "pageLength": 8
-            }).buttons().container().appendTo('#AuthorsTable_wrapper .col-md-6:eq(0)');
-            refreshAuthorsTable();
-        });
+    }
+    $(document).ready(function() {
+        $('#AuthorsTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": true,
+            "responsive": false,
+            "buttons": ["copy", "excel", "pdf", "print"],
+            "pageLength": 8
+        }).buttons().container().appendTo('#AuthorsTable_wrapper .col-md-6:eq(0)');
+        refreshAuthorsTable();
+    });
     </script>
 </body>
+
 </html>
 @endsection

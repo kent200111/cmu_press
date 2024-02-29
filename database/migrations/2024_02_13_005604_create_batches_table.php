@@ -8,7 +8,7 @@ return new class extends Migration {
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('im_id')->constrained('ims')->onDelete('cascade');
+            $table->foreignId('im_id')->constrained('ims');
             $table->string('name');
             $table->date('production_date');
             $table->float('production_cost');
