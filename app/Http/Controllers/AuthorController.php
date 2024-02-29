@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Author;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 class AuthorController extends Controller
 {
     public function index()
@@ -17,18 +14,29 @@ class AuthorController extends Controller
             return view('instructional_materials.manage_authors');
         }
     }
-
     public function create()
     {
     }
-
-
     public function store(Request $request)
     {
-        $author = new Author();
-        $author->first_name = $request->input('first_name');
-        $author->middle_name = $request->input('middle_name');
-        $author->last_name = $request->input('last_name');
+        function formatInput(string $name): string
+        {
+            $name = trim($name);
+            $name = preg_replace('/\s+/', ' ', $name);
+            $words = explode(' ', $name);
+            foreach ($words as &$word) {
+                $word = ucfirst(strtolower($word));
+            }
+            return implode(' ', $words);
+        }
+        $request['first_name'] = formatInput($request['first_name']);
+        $request['middle_name'] = $request->input('middle_name') ? formatInput($request->input('middle_name')) : null;
+        $request['last_name'] = formatInput($request['last_name']);
+        $author = new Author([
+            'first_name' => $request->input('first_name'),
+            'middle_name' => $request->input('middle_name'),
+            'last_name' => $request->input('last_name'),
+        ]);
         $author->save();
         return redirect()->route('authors.index');
     }
@@ -37,11 +45,24 @@ class AuthorController extends Controller
         return response()->json($author);
     }
     public function edit(Author $author)
-    { 
+    {
         return response()->json($author);
     }
     public function update(Request $request, Author $author)
     {
+        function formatInput(string $name): string
+        {
+            $name = trim($name);
+            $name = preg_replace('/\s+/', ' ', $name);
+            $words = explode(' ', $name);
+            foreach ($words as &$word) {
+                $word = ucfirst(strtolower($word));
+            }
+            return implode(' ', $words);
+        }
+        $request['first_name'] = formatInput($request['first_name']);
+        $request['middle_name'] = $request->input('middle_name') ? formatInput($request->input('middle_name')) : null;
+        $request['last_name'] = formatInput($request['last_name']);
         $author->update([
             'first_name' => $request->input('first_name'),
             'middle_name' => $request->input('middle_name'),
