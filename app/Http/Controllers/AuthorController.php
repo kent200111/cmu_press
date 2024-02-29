@@ -40,10 +40,13 @@ class AuthorController extends Controller
     { 
         return response()->json($author);
     }
-    
     public function update(Request $request, Author $author)
     {
-        $author->update($request->all());
+        $author->update([
+            'first_name' => $request->input('first_name'),
+            'middle_name' => $request->input('middle_name'),
+            'last_name' => $request->input('last_name'),
+        ]);
         return redirect()->route('authors.index');
     }
     public function destroy(Author $author)

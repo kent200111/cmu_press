@@ -53,7 +53,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- ADD AUTHOR FORM -->
-                        <form id="AddAuthorForm" method="POST" action="{{ route('authors.store') }}">
+                        <form id="AddAuthorForm" method="POST">
                             @csrf
                             <div class="container-fluid">
                                 <div class="card card-default">
@@ -150,7 +150,10 @@
                 jQuery('#AddAuthorModal').modal('show');
             }
             function hideAddAuthorModal() {
-                jQuery('#AddAuthorModal').modal('hide');
+                // Reset the form fields
+                $('#AddAuthorForm')[0].reset();
+                // Hide the modal
+                $('#AddAuthorModal').modal('hide');
             }
             function showEditAuthorModal(authorId) {
                 $.ajax({
@@ -174,9 +177,24 @@
                 jQuery('#EditAuthorModal').modal('hide');
             }
 
-
-
-    
+            $('#AddAuthorForm').submit(function (event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: "{{ route('authors.store') }}",
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        console.log(response);
+                        hideAddAuthorModal();
+                        // After successful addition, refresh the table data
+                        refreshAuthorsTable();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
 
             $('#EditAuthorForm').submit(function (event) {
                 event.preventDefault();
