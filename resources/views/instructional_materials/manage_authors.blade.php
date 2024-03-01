@@ -14,12 +14,12 @@
 </head>
 
 <body>
-    <div class="card-body">
+    <div class="container-fluid">
+        <br>
         <a class="btn btn-primary" onClick="showAddAuthorModal()" href="javascript:void(0)">
             <i class="fas fa-plus"></i> Add Author
         </a>
-    </div>
-    <div class="container-fluid">
+        <br><br>
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Manage Authors</h3>
@@ -40,6 +40,7 @@
             </div>
         </div>
     </div>
+    <br>
     <!-- ADD AUTHOR MODAL -->
     <div class="modal fade" id="AddAuthorModal">
         <div class="modal-dialog modal-lg">
