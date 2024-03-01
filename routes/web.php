@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,10 +20,8 @@ Route::get('/manage_masterlist', function () {
 Route::get('/manage_batches', function () {
     return view('instructional_materials.manage_batches');
 })->name('manage_batches');
-Route::get('/manage_categories', function () {
-    return view('instructional_materials.manage_categories');
-})->name('manage_categories');
 Route::get('/manage_employees', function () {
     return view('employee_management.manage_employees');
 })->name('manage_employees');
 Route::resource('authors', AuthorController::class);
+Route::resource('categories', CategoryController::class);

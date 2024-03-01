@@ -52,7 +52,7 @@
 
 
                     <li class="nav-item">
-                        <a href="manage_categories" class="nav-link">
+                        <a href="{{ route('categories.index') }}" class="nav-link">
                             <i class="fas fa-table"></i>
                             <p>Categories</p>
                         </a>

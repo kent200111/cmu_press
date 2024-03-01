@@ -21,15 +21,10 @@ class AuthorController extends Controller
     }
     public function store(Request $request)
     {
-        function formatInput(string $name): string
+        function formatInput(string $input): string
         {
-            $name = trim($name);
-            $name = preg_replace('/\s+/', ' ', $name);
-            $words = explode(' ', $name);
-            foreach ($words as &$word) {
-                $word = ucfirst(strtolower($word));
-            }
-            return implode(' ', $words);
+            $input = preg_replace('/\s+/', ' ', trim($input));
+            return $input;
         }
         $request['first_name'] = formatInput($request['first_name']);
         $request['middle_name'] = $request->input('middle_name') ? formatInput($request->input('middle_name')) : null;
@@ -52,15 +47,10 @@ class AuthorController extends Controller
     }
     public function update(Request $request, Author $author)
     {
-        function formatInput(string $name): string
+        function formatInput(string $input): string
         {
-            $name = trim($name);
-            $name = preg_replace('/\s+/', ' ', $name);
-            $words = explode(' ', $name);
-            foreach ($words as &$word) {
-                $word = ucfirst(strtolower($word));
-            }
-            return implode(' ', $words);
+            $input = preg_replace('/\s+/', ' ', trim($input));
+            return $input;
         }
         $request['first_name'] = formatInput($request['first_name']);
         $request['middle_name'] = $request->input('middle_name') ? formatInput($request->input('middle_name')) : null;

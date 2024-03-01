@@ -194,12 +194,10 @@
     function showAddAuthorModal() {
         $('#AddAuthorModal').modal('show');
     }
-
     function hideAddAuthorModal() {
         $('#AddAuthorForm')[0].reset();
         $('#AddAuthorModal').modal('hide');
     }
-
     function showEditAuthorModal(authorId) {
         $.ajax({
             url: "{{ route('authors.edit', ':id') }}".replace(':id', authorId),
@@ -217,15 +215,12 @@
             }
         });
     }
-
     function hideEditAuthorModal() {
         $('#EditAuthorModal').modal('hide');
     }
-
     function showDeleteAuthorModal() {
         $('#DeleteAuthorModal').modal('show');
     }
-
     function hideDeleteAuthorModal() {
         $('#DeleteAuthorModal').modal('hide');
     }
@@ -289,7 +284,6 @@
             });
         });
     });
-
     function refreshAuthorsTable() {
         $.ajax({
             url: "{{ route('authors.index') }}",
