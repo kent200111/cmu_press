@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class IM extends Model
 {
     use HasFactory;
+    protected $table = 'ims';
     protected $fillable = [
         'code',
         'title',
@@ -23,7 +24,7 @@ class IM extends Model
     }
     public function authors()
     {
-        return $this->belongsToMany(Author::class, 'im_authors');
+        return $this->belongsToMany(Author::class, 'im_authors', 'im_id', 'author_id');
     }
     public function batches()
     {

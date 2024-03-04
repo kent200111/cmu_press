@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\IMController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,9 +15,6 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 });
-Route::get('/manage_masterlist', function () {
-    return view('instructional_materials.manage_masterlist');
-})->name('manage_masterlist');
 Route::get('/manage_batches', function () {
     return view('instructional_materials.manage_batches');
 })->name('manage_batches');
@@ -25,3 +23,4 @@ Route::get('/manage_employees', function () {
 })->name('manage_employees');
 Route::resource('authors', AuthorController::class);
 Route::resource('categories', CategoryController::class);
+Route::resource('instructional_materials', IMController::class);

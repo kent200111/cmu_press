@@ -22,7 +22,7 @@
 
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-file"></i>
+                    <i class="fas fa-file"></i>
                     <p>
                         IMs
                         <i class="fas fa-angle-left right"></i>
@@ -37,7 +37,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="manage_masterlist" class="nav-link">
+                        <a href="{{ route('instructional_materials.index') }}" class="nav-link">
                             <i class="fas fa-book"></i>
                             <p>Masterlist</p>
                         </a>

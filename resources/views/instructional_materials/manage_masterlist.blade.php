@@ -1,168 +1,33 @@
 @extends('layouts.app')
-
 @section('content')
 
-<section class="content">
-    
+<html>
 
-    <!-- start modal -->
+<head>
+    <title>Manage Instructional Materials</title>
+    <link rel="stylesheet" href="admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
 
-    <section class="content">
-    <div class="card-body">
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
-            <i class="fas fa-plus"></i> Add Instructional Material
-        </button>
-
-
-        <div class="modal fade" id="modal-lg">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Instructional Material</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <section class="content">
-                            <div class="container-fluid">
-                                <div class="card card-default">
-
-                                    <!-- start page -->
-
-
-
-                                    <!-- Form aligned to the left -->
-
-                                    <div class="row">
-                                        <!-- Form aligned to the left -->
-                                        <div class="col-md-6">
-                                            <form>
-                                                <div class="card-body">
-                                                    <div class="form-group">
-                                                        <label for="code">CODE</label>
-                                                        <input type="text" class="form-control" id="code"
-                                                            placeholder="Enter Code" required>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="title">Title</label>
-                                                        <input type="text" class="form-control" id="title"
-                                                            placeholder="Enter Title" required>
-                                                    </div>
-
-
-                                                    <!-- college dropdown  -->
-                                                    <div class="form-group">
-                                                        <label>College</label>
-                                                        <select class="select2 form-control" multiple="multiple"
-                                                            data-placeholder="Select College" style="width: 100%;">
-                                                            <option>College of Agriculture</option>
-                                                            <option>College of Arts and Sciences</option>
-                                                            <option>College of Business and Management</option>
-                                                            <option>College of Education</option>
-                                                            <option>College of Engineering</option>
-                                                            <option>College of Forestry and Environmental Sciences
-                                                            </option>
-                                                            <option>College of Human Ecology</option>
-                                                            <option>College of Information Sciences and Computing
-                                                            </option>
-                                                            <option>College of Nursing</option>
-                                                            <option>College of Veterinary Medicine</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <!-- Category Dropdown -->
-                                                    <div class="form-group">
-                                                        <label>Category</label>
-                                                        <select class="select2 form-control" multiple="multiple"
-                                                            data-placeholder="Select Category" style="width: 100%;">
-                                                            <option>Book</option>
-                                                            <option>Creative Book</option>
-                                                            <option>Monograph</option>
-                                                            <option>Module</option>
-                                                            <option>Laboratory Manual/Workbook</option>
-                                                            <option>Learning Guide</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-
-                                        <!-- Form aligned to the right -->
-                                        <div class="col-md-6">
-                                            <form>
-                                                <div class="card-body">
-                                                    <!-- Publisher Dropdown -->
-                                                    <div class="form-group">
-                                                        <label>Category</label>
-                                                        <select class="select2 form-control" multiple="multiple"
-                                                            data-placeholder="Select Category" style="width: 100%;">
-                                                            <option>University Press</option>
-                                                            <option>Consigned Material</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="edition">Edition</label>
-                                                        <input type="text" class="form-control" id="edition"
-                                                            placeholder="Enter Edition">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="ISBN">ISBN</label>
-                                                        <input type="text" class="form-control" id="ISBN"
-                                                            placeholder="Enter ISBN">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="description">Description</label>
-                                                        <textarea class="form-control" id="description"
-                                                            placeholder="Enter Description" style="height: 100px;"
-                                                            oninput="updateWordsDisplay() "></textarea>
-                                                    </div>
-
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-
-
-
-
-
-                                    <!-- /.card-body -->
-
-
-                                    <!-- end page -->
-                                </div>
-                            </div>
-                            <section>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add</button>
-                    </div>
-                </div>
-            </div>
-</section>
-
-
-
-
-
-    <!-- end modal -->
-
-
-
-
+<body>
     <div class="container-fluid">
+        <br>
+        <a class="btn btn-primary" onClick="showAddInstructionalMaterialModal()" href="javascript:void(0)">
+            <i class="fas fa-plus"></i> Add Instructional Material
+        </a>
+        <br><br>
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Manage Masterlist</h3>
+                <h3 class="card-title">Manage Instructional Materials</h3>
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <!-- INSTRUCTIONAL MATERIALS TABLE -->
+                <table class="table table-bordered table-striped" id="InstructionalMaterialsTable">
                     <thead>
                         <tr>
                             <th>Code</th>
@@ -173,158 +38,203 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td>Win 95+</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.5
-                            </td>
-                            <td>Win 95+</td>
-                            <td>5.5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 6
-                            </td>
-                            <td>Win 98+</td>
-                            <td>6</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet Explorer 7</td>
-                            <td>Win XP SP2+</td>
-                            <td>7</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>AOL browser (AOL desktop)</td>
-                            <td>Win XP</td>
-                            <td>6</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 1.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.7</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 1.5</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 2.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 3.0</td>
-                            <td>Win 2k+ / OSX.3+</td>
-                            <td>1.9</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        </tfoot>
+                    </tbody>
                 </table>
+                <!-- INSTRUCTIONAL MATERIALS TABLE -->
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
-    <!-- /.col -->
-    </div>
-    <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-</section>
-<!-- /.content -->
-</div>
+    <br>
 
+
+
+    <!-- ADD INSTRUCTIONAL MATERIAL MODAL -->
+    <div class="modal fade" id="AddInstructionalMaterialModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Instructional Material</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- ADD INSTRUCTIONAL MATERIAL FORM -->
+                    <form id="AddInstructionalMaterialForm" method="POST">
+                        @csrf
+                        <div class="container-fluid">
+                            <div class="card card-default">
+                                <div class="row">
+                                    <!-- LEFT SIDE -->
+                                    <div class="col-md-6">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="code">Code</label>
+                                                <input type="text" class="form-control" name="code"
+                                                    placeholder="Enter Code" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="title">Title</label>
+                                                <input type="text" class="form-control" name="title"
+                                                    placeholder="Enter Title" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="authors">Authors</label>
+                                                <select multiple="multiple" class="select2 form-control" name="authors"
+                                                    data-placeholder="Select Authors" style="width: 100%;" required>
+                                                    <option>Author 1</option>
+                                                    <option>Author 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="category">Category</label>
+                                                <select class="select2 form-control" name="category"
+                                                    data-placeholder="Select Category" style="width: 100%;" required>
+                                                    <option value="" disabled selected>Select Category</option>
+                                                    <option>Book</option>
+                                                    <option>Creative Book</option>
+                                                    <option>Monograph</option>
+                                                    <option>Module</option>
+                                                    <option>Laboratory Manual/Workbook</option>
+                                                    <option>Learning Guide</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="college">College</label>
+                                                <select class="select2 form-control" name="college"
+                                                    data-placeholder="Select College" style="width: 100%;">
+                                                    <option value="" disabled selected>Select College</option>
+                                                    <option>College of Agriculture</option>
+                                                    <option>College of Arts and Sciences</option>
+                                                    <option>College of Business and Management</option>
+                                                    <option>College of Education</option>
+                                                    <option>College of Engineering</option>
+                                                    <option>College of Forestry and Environmental Sciences
+                                                    </option>
+                                                    <option>College of Human Ecology</option>
+                                                    <option>College of Information Sciences and Computing
+                                                    </option>
+                                                    <option>College of Nursing</option>
+                                                    <option>College of Veterinary Medicine</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- LEFT SIDE -->
+                                    <!-- RIGHT SIDE -->
+                                    <div class="col-md-6">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="publisher">Publisher</label>
+                                                <select class="select2 form-control" name="publisher"
+                                                    data-placeholder="Select Publisher" style="width: 100%;">
+                                                    <option value="" disabled selected>Select Publisher</option>
+                                                    <option>University Press</option>
+                                                    <option>Consigned Material</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edition">Edition</label>
+                                                <input type="text" class="form-control" name="edition"
+                                                    placeholder="Enter Edition">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="isbn">ISBN</label>
+                                                <input type="text" class="form-control" name="isbn"
+                                                    placeholder="Enter ISBN">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea type="text" class="form-control" name="description"
+                                                    placeholder="Enter Description" style="height: 124px;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- RIGHT SIDE -->
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-danger"
+                                    onClick="hideAddInstructionalMaterialModal()"
+                                    href="javascript:void(0)">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- ADD INSTRUCTIONAL MATERIAL FORM -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ADD INSTRUCTIONAL MATERIAL MODAL -->
+
+
+
+
+
+
+
+
+
+    <script>
+    function showAddInstructionalMaterialModal() {
+        $('#AddInstructionalMaterialModal').modal('show');
+    }
+
+    function hideAddInstructionalMaterialModal() {
+        $('#AddInstructionalMaterialForm')[0].reset();
+        $('#AddInstructionalMaterialModal').modal('hide');
+    }
+
+    function refreshInstructionalMaterialsTable() {
+        $.ajax({
+            url: "{{ route('instructional_materials.index') }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var table = $('#InstructionalMaterialsTable').DataTable();
+                var existingRows = table.rows().remove().draw(false);
+                data.forEach(function(im) {
+                    var authors = '';
+                    if (im.authors.length > 1) {
+                        authors += im.authors[0].last_name + ' et al.<br>';
+                    } else {
+                        authors += im.authors[0].last_name + '<br>';
+                    }
+                    table.row.add([
+                        im.code,
+                        im.title,
+                        authors,
+                        im.category.name,
+                        '<div class="text-center">' +
+                        '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
+                        im.id + '" onclick="showEditInstructionalMaterialModal(' + im.id +
+                        ')"><i class="material-icons">&#xE254;</i></a>' +
+                        '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' +
+                        im.id + '"><i class="material-icons">&#xE872;</i></a>' +
+                        '</div>'
+                    ]);
+                });
+                table.draw();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+    $(document).ready(function() {
+        $('#InstructionalMaterialsTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": true,
+            "responsive": false,
+            "buttons": ["copy", "excel", "pdf", "print"],
+            "pageLength": 8
+        }).buttons().container().appendTo('#InstructionalMaterialsTable_wrapper .col-md-6:eq(0)');
+        refreshInstructionalMaterialsTable();
+    });
+    </script>
+</body>
+
+</html>
 @endsection
