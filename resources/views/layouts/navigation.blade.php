@@ -22,7 +22,7 @@
 
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="fas fa-file"></i>
+                    <i class="nav-icon fas fa-file"></i>
                     <p>
                         IMs
                         <i class="fas fa-angle-left right"></i>

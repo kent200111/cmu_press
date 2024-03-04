@@ -13,7 +13,7 @@ class CategoryController extends Controller
         if (request()->ajax()) {
             return response()->json($categories);
         } else {
-            return view('instructional_materials.manage_categories');
+            return view('instructional_materials.manage_categories', compact('categories'));
         }
     }
     public function create()
@@ -58,8 +58,9 @@ class CategoryController extends Controller
         ]);
         return redirect()->route('categories.index');
     }
-    public function destroy(Category $category)
+    public function destroy($id)
     {
+        $category = Category::findOrFail($id);
         $category->delete();
         return response()->json(['success' => 'Category deleted successfully.']);
     }

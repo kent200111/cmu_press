@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <html>
 
 <head>
@@ -45,9 +44,6 @@
         </div>
     </div>
     <br>
-
-
-
     <!-- ADD INSTRUCTIONAL MATERIAL MODAL -->
     <div class="modal fade" id="AddInstructionalMaterialModal">
         <div class="modal-dialog modal-lg">
@@ -77,10 +73,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="authors">Authors</label>
-                                                <select multiple="multiple" class="select2 form-control" name="authors"
-                                                    data-placeholder="Select Authors" style="width: 100%;" required>
-                                                    <option>Author 1</option>
-                                                    <option>Author 2</option>
+                                                <select multiple="multiple" class="select2 form-control"
+                                                    name="authors[]" data-placeholder="Select Authors"
+                                                    style="width: 100%;" required>
+                                                    @foreach($authors as $author)
+                                                    <option value="{{ $author->id }}">{{ $author->first_name }}
+                                                        {{ $author->last_name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -88,12 +87,9 @@
                                                 <select class="select2 form-control" name="category"
                                                     data-placeholder="Select Category" style="width: 100%;" required>
                                                     <option value="" disabled selected>Select Category</option>
-                                                    <option>Book</option>
-                                                    <option>Creative Book</option>
-                                                    <option>Monograph</option>
-                                                    <option>Module</option>
-                                                    <option>Laboratory Manual/Workbook</option>
-                                                    <option>Learning Guide</option>
+                                                    @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -164,25 +160,82 @@
         </div>
     </div>
     <!-- ADD INSTRUCTIONAL MATERIAL MODAL -->
-
-
-
-
-
-
-
-
-
+    <!-- DELETE INSTRUCTIONAL MATERIAL MODAL -->
+    <div class="modal fade" id="DeleteInstructionalMaterialModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Instructional Material</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this instructional material?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="hideDeleteInstructionalMaterialModal()"
+                        href="javascript:void(0)">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="DeleteInstructionalMaterial">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DELETE INSTRUCTIONAL MATERIAL MODAL -->
     <script>
     function showAddInstructionalMaterialModal() {
         $('#AddInstructionalMaterialModal').modal('show');
     }
-
     function hideAddInstructionalMaterialModal() {
         $('#AddInstructionalMaterialForm')[0].reset();
+        $('#AddInstructionalMaterialModal select').val(null).trigger('change');
         $('#AddInstructionalMaterialModal').modal('hide');
     }
-
+    function showDeleteInstructionalMaterialModal() {
+        $('#DeleteInstructionalMaterialModal').modal('show');
+    }
+    function hideDeleteInstructionalMaterialModal() {
+        $('#DeleteInstructionalMaterialModal').modal('hide');
+    }
+    $('#AddInstructionalMaterialForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            url: "{{ route('instructional_materials.store') }}",
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                hideAddInstructionalMaterialModal();
+                // $('#SuccessAdd').modal('show');
+                refreshInstructionalMaterialsTable();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+    $('#InstructionalMaterialsTable').on('click', '.delete', function(event) {
+        event.preventDefault();
+        var instructionalMaterialId = $(this).data('id');
+        showDeleteInstructionalMaterialModal();
+        $('#DeleteInstructionalMaterial').off().on('click', function() {
+            $.ajax({
+                url: "{{ route('instructional_materials.destroy', ':id') }}".replace(':id',
+                    instructionalMaterialId),
+                type: 'DELETE',
+                data: {
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    console.log(response);
+                    hideDeleteInstructionalMaterialModal();
+                    // $('#SuccessDelete').modal('show');
+                    refreshInstructionalMaterialsTable();
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
     function refreshInstructionalMaterialsTable() {
         $.ajax({
             url: "{{ route('instructional_materials.index') }}",

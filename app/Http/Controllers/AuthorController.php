@@ -13,7 +13,7 @@ class AuthorController extends Controller
         if (request()->ajax()) {
             return response()->json($authors);
         } else {
-            return view('instructional_materials.manage_authors');
+            return view('instructional_materials.manage_authors', compact('authors'));
         }
     }
     public function create()
@@ -62,8 +62,9 @@ class AuthorController extends Controller
         ]);
         return redirect()->route('authors.index');
     }
-    public function destroy(Author $author)
+    public function destroy($id)
     {
+        $author = Author::findOrFail($id);
         $author->delete();
         return response()->json(['success' => 'Author deleted successfully.']);
     }
