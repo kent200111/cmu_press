@@ -10,7 +10,6 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('im_id')->constrained('ims');
             $table->foreignId('author_id')->constrained('authors');
-            $table->timestamps();
         });
     }
     public function down(): void
