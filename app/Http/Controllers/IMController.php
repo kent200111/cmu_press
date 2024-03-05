@@ -65,6 +65,37 @@ class IMController extends Controller
         $im->load('authors');
         return response()->json($im);
     }
+    public function update(Request $request, $id)
+    {
+        $im = IM::findOrFail($id);
+        function formatInput(string $input): string
+        {
+            $input = preg_replace('/\s+/', ' ', trim($input));
+            return $input;
+        }
+        $request['code'] = formatInput($request['code']);
+        $request['title'] = formatInput($request['title']);
+        $request['category'] = formatInput($request['category']);
+        $request['college'] = $request->input('college') ? formatInput($request->input('college')) : null;
+        $request['publisher'] = $request->input('publisher') ? formatInput($request->input('publisher')) : null;
+        $request['edition'] = $request->input('edition') ? formatInput($request->input('edition')) : null;
+        $request['isbn'] = $request->input('isbn') ? formatInput($request->input('isbn')) : null;
+        $request['description'] = $request->input('description') ? formatInput($request->input('description')) : null;
+        $im->update([
+            'code' => $request->input('code'),
+            'title' => $request->input('title'),
+            'category_id' => $request->input('category'),
+            'college' => $request->input('college'),
+            'publisher' => $request->input('publisher'),
+            'edition' => $request->input('edition'),
+            'isbn' => $request->input('isbn'),
+            'description' => $request->input('description'),
+        ]);
+        $im->touch();
+        $authors = $request->input('authors', []);
+        $im->authors()->sync($authors);
+        return redirect()->route('instructional_materials.index');
+    }
     public function destroy($id)
     {
         $im = IM::findOrFail($id);

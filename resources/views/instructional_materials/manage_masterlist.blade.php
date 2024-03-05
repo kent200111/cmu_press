@@ -320,23 +320,23 @@
                 $('#EditInstructionalMaterialModal #InstructionalMaterialId').val(instructionalMaterial.id);
                 $('#EditInstructionalMaterialModal #Code').val(instructionalMaterial.code);
                 $('#EditInstructionalMaterialModal #Title').val(instructionalMaterial.title);
-                $('#EditInstructionalMaterialModal #Category').val(instructionalMaterial.category_id).trigger('change');
-                $('#EditInstructionalMaterialModal #College').val(instructionalMaterial.college).trigger('change');
-                $('#EditInstructionalMaterialModal #Publisher').val(instructionalMaterial.publisher).trigger('change');
+                $('#EditInstructionalMaterialModal #Category').val(instructionalMaterial.category_id)
+                    .trigger('change');
+                $('#EditInstructionalMaterialModal #College').val(instructionalMaterial.college).trigger(
+                    'change');
+                $('#EditInstructionalMaterialModal #Publisher').val(instructionalMaterial.publisher)
+                    .trigger('change');
                 $('#EditInstructionalMaterialModal #Edition').val(instructionalMaterial.edition);
                 $('#EditInstructionalMaterialModal #Isbn').val(instructionalMaterial.isbn);
                 $('#EditInstructionalMaterialModal #Description').val(instructionalMaterial.description);
                 var authorsSelect = $('#EditInstructionalMaterialModal #Authors');
-                authorsSelect.empty();
-                instructionalMaterial.authors.forEach(function(author) {
-                    authorsSelect.append($('<option>', {
-                        value: author.id,
-                        text: author.first_name + ' ' + author.last_name
+                authorsSelect.find('option').each(function() {
+                    var authorId = $(this).val();
+                    $(this).prop('selected', instructionalMaterial.authors.some(function(author) {
+                        return author.id == authorId;
                     }));
                 });
-                authorsSelect.val(instructionalMaterial.authors.map(function(author) {
-                    return author.id;
-                })).trigger('change');
+                authorsSelect.trigger('change');
                 $('#EditInstructionalMaterialModal').modal('show');
             },
             error: function(xhr, status, error) {
@@ -364,6 +364,26 @@
                 console.log(response);
                 hideAddInstructionalMaterialModal();
                 // $('#SuccessAdd').modal('show');
+                refreshInstructionalMaterialsTable();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+    $('#EditInstructionalMaterialForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        var instructionalMaterialId = $('#InstructionalMaterialId').val();
+        $.ajax({
+            url: "{{ route('instructional_materials.update', ':id') }}".replace(':id',
+                instructionalMaterialId),
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                hideEditInstructionalMaterialModal();
+                // $('#SuccessUpdate').modal('show');
                 refreshInstructionalMaterialsTable();
             },
             error: function(xhr, status, error) {

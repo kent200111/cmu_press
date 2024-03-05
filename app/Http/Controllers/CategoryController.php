@@ -43,8 +43,9 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         return response()->json($category);
     }
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
+        $category = Category::findOrFail($id);
         function formatInput(string $input): string
         {
             $input = preg_replace('/\s+/', ' ', trim($input));

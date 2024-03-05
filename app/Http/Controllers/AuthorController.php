@@ -45,8 +45,9 @@ class AuthorController extends Controller
         $author = Author::findOrFail($id);
         return response()->json($author);
     }
-    public function update(Request $request, Author $author)
+    public function update(Request $request, $id)
     {
+        $author = Author::findOrFail($id);
         function formatInput(string $input): string
         {
             $input = preg_replace('/\s+/', ' ', trim($input));
