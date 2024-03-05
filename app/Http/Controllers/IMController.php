@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Models\IM;
 use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class IMController extends Controller
 {
     public function index()
@@ -47,18 +49,27 @@ class IMController extends Controller
             'publisher' => $request->input('publisher'),
             'edition' => $request->input('edition'),
             'isbn' => $request->input('isbn'),
-            'description' => $request->input('description'),           
+            'description' => $request->input('description'),
         ]);
         $im->save();
         $authors = $request->input('authors', []);
         $im->authors()->attach($authors);
         return redirect()->route('instructional_materials.index');
     }
+    public function show(IM $im)
+    {
+    }
+    public function edit($id)
+    {
+        $im = IM::findOrFail($id);
+        $im->load('authors');
+        return response()->json($im);
+    }
     public function destroy($id)
     {
         $im = IM::findOrFail($id);
         $im->authors()->detach();
-        $im->delete();  
+        $im->delete();
         return response()->json(['success' => 'Instructional material deleted successfully.']);
     }
 }

@@ -37,10 +37,10 @@ class CategoryController extends Controller
     }
     public function show(Category $category)
     {
-        return response()->json($category);
     }
-    public function edit(Category $category)
+    public function edit($id)
     {
+        $category = Category::findOrFail($id);
         return response()->json($category);
     }
     public function update(Request $request, Category $category)
