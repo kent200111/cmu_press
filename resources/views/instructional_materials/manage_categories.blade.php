@@ -1,85 +1,32 @@
 @extends('layouts.app')
-
 @section('content')
+<html>
 
-<section class="content">
-    
+<head>
+    <title>Manage Categories</title>
+    <link rel="stylesheet" href="admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
 
-    <!-- start modal -->
-    <section class="content">
-    <div class="card-body">
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
-            <i class="fas fa-plus"></i> Add Category
-        </button>
-
-        <!-- Modal form -->
-        <div class="modal fade" id="modal-lg">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Category</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <section class="content">
-                            <div class="container-fluid">
-                                <div class="card card-default">
-
-                                    <!-- start page -->
-
-                                       
-                                            <form>
-                                                <div class="card-body">
-
-                                                    <div class="form-group">
-                                                        <label for="name">Category Name</label>
-                                                        <input type="text" class="form-control" id="name"
-                                                            placeholder="Enter First Name" required>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="description">Description</label>
-                                                        <textarea class="form-control" id="description"
-                                                            placeholder="Enter Description" style="height: 100px;"
-                                                            oninput="updateWordsDisplay() "></textarea>
-                                                    </div>
-
-                                                </div>
-                                            </form>
-                                        
-                                    <!-- /.card-body -->
-
-
-                                    <!-- end page -->
-                                </div>
-                            </div>
-                            <section>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add</button>
-                    </div>
-                </div>
-            </div>
-</section>
-
-    <!-- end modal -->
-
-
-
-
+<body>
     <div class="container-fluid">
+        <br>
+        <a class="btn btn-primary" onClick="showAddCategoryModal()" href="javascript:void(0)">
+            <i class="fas fa-plus"></i> Add Category
+        </a>
+        <br><br>
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Manage Categories</h3>
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <!-- CATEGORIES TABLE -->
+                <table class="table table-bordered table-striped" id="CategoriesTable">
                     <thead>
                         <tr>
                             <th>Category Name</th>
@@ -88,134 +35,290 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        <tr>
-                        <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td class="text-center">
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        </tfoot>
+                    </tbody>
                 </table>
+                <!-- CATEGORIES TABLE -->
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
-    <!-- /.col -->
+    <br>
+    <!-- ADD CATEGORY MODAL -->
+    <div class="modal fade" id="AddCategoryModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Category</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- ADD CATEGORY FORM -->
+                    <form id="AddCategoryForm" method="POST">
+                        @csrf
+                        <div class="container-fluid">
+                            <div class="card card-default">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="name">Category Name</label>
+                                                <input type="text" class="form-control" name="name"
+                                                    placeholder="Enter Category Name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea type="text" class="form-control" name="description"
+                                                    placeholder="Enter Description" style="height: 100px;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-danger" onClick="hideAddCategoryModal()"
+                                    href="javascript:void(0)">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- ADD CATEGORY FORM -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.row -->
+    <!-- ADD CATEGORY MODAL -->
+    <!-- EDIT CATEGORY MODAL -->
+    <div class="modal fade" id="EditCategoryModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Category</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- EDIT CATEGORY FORM -->
+                    <form id="EditCategoryForm" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" id="CategoryId" name="category_id">
+                        <div class="container-fluid">
+                            <div class="card card-default">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="name">Category Name</label>
+                                                <input type="text" class="form-control" id="Name" name="name"
+                                                    placeholder="Enter Category Name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea type="text" class="form-control" id="Description"
+                                                    name="description" placeholder="Enter Description"
+                                                    style="height: 100px;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-danger" onClick="hideEditCategoryModal()"
+                                    href="javascript:void(0)">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- EDIT CATEGORY FORM -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.container-fluid -->
-</section>
-<!-- /.content -->
-</div>
+    <!-- EDIT CATEGORY MODAL -->
+    <!-- DELETE CATEGORY MODAL -->
+    <div class="modal fade" id="DeleteCategoryModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Category</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this category?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="hideDeleteCategoryModal()"
+                        href="javascript:void(0)">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="DeleteCategory">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DELETE CATEGORY MODAL -->
+    <!-- SUCCESS MODALS -->
+    <div class="modal fade" id="SuccessAdd" tabindex="-1" role="dialog" aria-labelledby="SuccessAddLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="SuccessAddLabel">Category Added Successfully!</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="SuccessUpdate" tabindex="-1" role="dialog" aria-labelledby="SuccessUpdateLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="SuccessUpdateLabel">Category Updated Successfully!</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="SuccessDelete" tabindex="-1" role="dialog" aria-labelledby="SuccessDeleteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="SuccessDeleteLabel">Category Deleted Successfully!</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SUCCESS MODALS -->
+    <script>
+    function showAddCategoryModal() {
+        $('#AddCategoryModal').modal('show');
+    }
+    function hideAddCategoryModal() {
+        $('#AddCategoryForm')[0].reset();
+        $('#AddCategoryModal').modal('hide');
+    }
+    function showEditCategoryModal(categoryId) {
+        $.ajax({
+            url: "{{ route('categories.edit', ':id') }}".replace(':id', categoryId),
+            type: 'GET',
+            dataType: 'json',
+            success: function(category) {
+                $('#EditCategoryModal #CategoryId').val(category.id);
+                $('#EditCategoryModal #Name').val(category.name);
+                $('#EditCategoryModal #Description').val(category.description);
+                $('#EditCategoryModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+    function hideEditCategoryModal() {
+        $('#EditCategoryModal').modal('hide');
+    }
+    function showDeleteCategoryModal() {
+        $('#DeleteCategoryModal').modal('show');
+    }
+    function hideDeleteCategoryModal() {
+        $('#DeleteCategoryModal').modal('hide');
+    }
+    $('#AddCategoryForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            url: "{{ route('categories.store') }}",
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                hideAddCategoryModal();
+                $('#SuccessAdd').modal('show');
+                refreshCategoriesTable();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+    $('#EditCategoryForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        var categoryId = $('#CategoryId').val();
+        $.ajax({
+            url: "{{ route('categories.update', ':id') }}".replace(':id', categoryId),
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                hideEditCategoryModal();
+                $('#SuccessUpdate').modal('show');
+                refreshCategoriesTable();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+    $('#CategoriesTable').on('click', '.delete', function(event) {
+        event.preventDefault();
+        var categoryId = $(this).data('id');
+        showDeleteCategoryModal();
+        $('#DeleteCategory').off().on('click', function() {
+            $.ajax({
+                url: "{{ route('categories.destroy', ':id') }}".replace(':id', categoryId),
+                type: 'DELETE',
+                data: {
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    console.log(response);
+                    hideDeleteCategoryModal();
+                    $('#SuccessDelete').modal('show');
+                    refreshCategoriesTable();
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+    function refreshCategoriesTable() {
+        $.ajax({
+            url: "{{ route('categories.index') }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var table = $('#CategoriesTable').DataTable();
+                var existingRows = table.rows().remove().draw(false);
+                data.forEach(function(category) {
+                    table.row.add([
+                        category.name,
+                        category.description,
+                        '<div class="text-center">' +
+                        '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
+                        category.id + '" onclick="showEditCategoryModal(' + category.id +
+                        ')"><i class="material-icons">&#xE254;</i></a>' +
+                        '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' +
+                        category.id + '"><i class="material-icons">&#xE872;</i></a>' +
+                        '</div>'
+                    ]);
+                });
+                table.draw();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+    $(document).ready(function() {
+        $('#CategoriesTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": true,
+            "responsive": false,
+            "buttons": ["copy", "excel", "pdf", "print"],
+            "pageLength": 8
+        }).buttons().container().appendTo('#CategoriesTable_wrapper .col-md-6:eq(0)');
+        refreshCategoriesTable();
+    });
+    </script>
+</body>
 
+</html>
 @endsection

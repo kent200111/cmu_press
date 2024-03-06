@@ -39,7 +39,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="manage_masterlist" class="nav-link">
+                        <a href="{{ route('instructional_materials.index') }}" class="nav-link">
                             <i class="fas fa-book"></i>
                             <p>Masterlist</p>
                         </a>
@@ -54,7 +54,7 @@
 
 
                     <li class="nav-item">
-                        <a href="manage_categories" class="nav-link">
+                        <a href="{{ route('categories.index') }}" class="nav-link">
                             <i class="fas fa-table"></i>
                             <p>Categories</p>
                         </a>

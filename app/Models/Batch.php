@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Batch extends Model
 {
     use HasFactory;
+    protected $table = 'batches';
     protected $fillable = [
         'im_id',
         'name',

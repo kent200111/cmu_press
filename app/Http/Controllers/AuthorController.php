@@ -13,7 +13,7 @@ class AuthorController extends Controller
         if (request()->ajax()) {
             return response()->json($authors);
         } else {
-            return view('instructional_materials.manage_authors');
+            return view('instructional_materials.manage_authors', compact('authors'));
         }
     }
     public function create()
@@ -21,15 +21,10 @@ class AuthorController extends Controller
     }
     public function store(Request $request)
     {
-        function formatInput(string $name): string
+        function formatInput(string $input): string
         {
-            $name = trim($name);
-            $name = preg_replace('/\s+/', ' ', $name);
-            $words = explode(' ', $name);
-            foreach ($words as &$word) {
-                $word = ucfirst(strtolower($word));
-            }
-            return implode(' ', $words);
+            $input = preg_replace('/\s+/', ' ', trim($input));
+            return $input;
         }
         $request['first_name'] = formatInput($request['first_name']);
         $request['middle_name'] = $request->input('middle_name') ? formatInput($request->input('middle_name')) : null;
@@ -44,23 +39,19 @@ class AuthorController extends Controller
     }
     public function show(Author $author)
     {
+    }
+    public function edit($id)
+    {
+        $author = Author::findOrFail($id);
         return response()->json($author);
     }
-    public function edit(Author $author)
+    public function update(Request $request, $id)
     {
-        return response()->json($author);
-    }
-    public function update(Request $request, Author $author)
-    {
-        function formatInput(string $name): string
+        $author = Author::findOrFail($id);
+        function formatInput(string $input): string
         {
-            $name = trim($name);
-            $name = preg_replace('/\s+/', ' ', $name);
-            $words = explode(' ', $name);
-            foreach ($words as &$word) {
-                $word = ucfirst(strtolower($word));
-            }
-            return implode(' ', $words);
+            $input = preg_replace('/\s+/', ' ', trim($input));
+            return $input;
         }
         $request['first_name'] = formatInput($request['first_name']);
         $request['middle_name'] = $request->input('middle_name') ? formatInput($request->input('middle_name')) : null;
@@ -72,8 +63,9 @@ class AuthorController extends Controller
         ]);
         return redirect()->route('authors.index');
     }
-    public function destroy(Author $author)
+    public function destroy($id)
     {
+        $author = Author::findOrFail($id);
         $author->delete();
         return response()->json(['success' => 'Author deleted successfully.']);
     }
