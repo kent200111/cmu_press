@@ -1,130 +1,32 @@
 @extends('layouts.app')
-
 @section('content')
+<html>
 
-<section class="content">
-    
+<head>
+    <title>Manage Batches</title>
+    <link rel="stylesheet" href="admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
 
-    <!-- start modal -->
-
-    <section class="content">
-    <div class="card-body">
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
-            <i class="fas fa-plus"></i> Add Batch
-        </button>
-
-        <!-- Modal form -->
-        <div class="modal fade" id="modal-lg">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add Batch</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <section class="content">
-                            <div class="container-fluid">
-                                <div class="card card-default">
-
-                                    <!-- start page -->
-
-                                    <!-- Form aligned to the left -->
-
-                                    <div class="row">
-                                        <!-- Form aligned to the left -->
-                                        <div class="col-md-6">
-                                            <form>
-                                                <div class="card-body">
-
-                                                    <div class="form-group">
-                                                        <label>Material</label>
-                                                        <select class="form-control select2" style="width: 100%;" required>
-                                                            <option>Material from database</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="name">Batch Name</label>
-                                                        <input type="text" class="form-control" id="name"
-                                                            placeholder="Enter Batch Name" required>
-                                                    </div>
-
-                                                    <!-- Date Picker -->
-                                                    <div class="form-group">
-                                                        <label>Date:</label>
-                                                        <div class="input-group date" id="reservationdate"
-                                                            data-target-input="nearest">
-                                                            <input type="text" class="form-control datetimepicker-input"
-                                                                data-target="#reservationdate" />
-                                                            <div class="input-group-append"
-                                                                data-target="#reservationdate"
-                                                                data-toggle="datetimepicker">
-                                                                <div class="input-group-text"><i
-                                                                        class="fa fa-calendar"></i></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-
-                                        <!-- Form aligned to the right -->
-                                        <div class="col-md-6">
-                                            <form>
-                                                <div class="card-body">
-                                                <div class="form-group">
-                                                        <label for="cost">Production Cost</label>
-                                                        <input type="text" class="form-control" id="cost"
-                                                            placeholder="Enter Production Cost" required>
-                                                    </div>
-                                                  
-                                                    <div class="form-group">
-                                                        <label for="price">Product Price</label>
-                                                        <input type="text" class="form-control" id="price"
-                                                            placeholder="Enter Product Price" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="quantity">Product Quantity</label>
-                                                        <input type="text" class="form-control" id="quantity"
-                                                            placeholder="Enter Product Quantity" required>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <!-- /.card-body -->
-
-
-                                    <!-- end page -->
-                                </div>
-                            </div>
-                            <section>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add</button>
-                    </div>
-                </div>
-            </div>
-</section>
-
-    <!-- end modal -->
-
-
-
-
+<body>
     <div class="container-fluid">
+        <br>
+        <a class="btn btn-primary" onClick="showAddBatchModal()" href="javascript:void(0)">
+            <i class="fas fa-plus"></i> Add Batch
+        </a>
+        <br><br>
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Manage Batches</h3>
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <!-- BATCHES TABLE -->
+                <table class="table table-bordered table-striped" id="BatchesTable">
                     <thead>
                         <tr>
                             <th>Instructional Material</th>
@@ -137,176 +39,365 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.0
-                            </td>
-                            <td>Win 95+</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.5
-                            </td>
-                            <td>Win 95+</td>
-                            <td>5.5</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 6
-                            </td>
-                            <td>Win 98+</td>
-                            <td>6</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet Explorer 7</td>
-                            <td>Win XP SP2+</td>
-                            <td>7</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>AOL browser (AOL desktop)</td>
-                            <td>Win XP</td>
-                            <td>6</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 1.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.7</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 1.5</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 2.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 3.0</td>
-                            <td>Win 2k+ / OSX.3+</td>
-                            <td>1.9</td>
-                            <td>5</td>
-                            <td>5</td>
-                            <td class="text-center">
-                                <a href="#" class="view" title="View" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE417;</i></a>
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE254;</i></a>
-                                <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i
-                                        class="material-icons">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        </tfoot>
+                    </tbody>
                 </table>
+                <!-- BATCHES TABLE -->
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
-    <!-- /.col -->
+    <br>
+    <!-- ADD BATCH MODAL -->
+    <div class="modal fade" id="AddBatchModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Batch</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- ADD BATCH FORM -->
+                    <form id="AddBatchForm" method="POST">
+                        @csrf
+                        <div class="container-fluid">
+                            <div class="card card-default">
+                                <div class="row">
+                                    <!-- LEFT SIDE -->
+                                    <div class="col-md-6">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="instructional_material">Instructional Material</label>
+                                                <select class="select2 form-control" name="instructional_material"
+                                                    data-placeholder="Select Instructional Material"
+                                                    style="width: 100%;" required>
+                                                    <option value="" disabled selected>Select Instructional Material
+                                                    </option>
+                                                    @foreach($ims as $im)
+                                                    <option value="{{ $im->id }}">{{ $im->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Batch Name</label>
+                                                <input type="text" class="form-control" name="name"
+                                                    placeholder="Enter Batch Name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="production_date">Production Date</label>
+                                                <input type="date" class="form-control" name="production_date" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- LEFT SIDE -->
+                                    <!-- RIGHT SIDE -->
+                                    <div class="col-md-6">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="production_cost">Production Cost</label>
+                                                <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
+                                                    class="form-control" name="production_cost"
+                                                    placeholder="Enter Production Cost" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="price">Price</label>
+                                                <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
+                                                    class="form-control" name="price" placeholder="Enter Price"
+                                                    required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="quantity">Quantity</label>
+                                                <input type="text" oninput="NumbersOnly(this)" class="form-control"
+                                                    name="quantity" placeholder="Enter Quantity" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- RIGHT SIDE -->
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-danger" onClick="hideAddBatchModal()"
+                                    href="javascript:void(0)">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- ADD BATCH FORM -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.row -->
+    <!-- ADD BATCH MODAL -->
+    <!-- EDIT BATCH MODAL -->
+    <div class="modal fade" id="EditBatchModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Batch</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- EDIT BATCH FORM -->
+                    <form id="EditBatchForm" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" id="BatchId" name="batch_id">
+                        <div class="container-fluid">
+                            <div class="card card-default">
+                                <div class="row">
+                                    <!-- LEFT SIDE -->
+                                    <div class="col-md-6">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="instructional_material">Instructional Material</label>
+                                                <select class="select2 form-control" id="InstructionalMaterial"
+                                                    name="instructional_material"
+                                                    data-placeholder="Select Instructional Material"
+                                                    style="width: 100%;" required>
+                                                    <option value="" disabled selected>Select Instructional Material
+                                                    </option>
+                                                    @foreach($ims as $im)
+                                                    <option value="{{ $im->id }}">{{ $im->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Batch Name</label>
+                                                <input type="text" class="form-control" id="Name" name="name"
+                                                    placeholder="Enter Batch Name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="production_date">Production Date</label>
+                                                <input type="date" class="form-control" id="ProductionDate"
+                                                    name="production_date" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- LEFT SIDE -->
+                                    <!-- RIGHT SIDE -->
+                                    <div class="col-md-6">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="production_cost">Production Cost</label>
+                                                <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
+                                                    class="form-control" id="ProductionCost" name="production_cost"
+                                                    placeholder="Enter Production Cost" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="price">Price</label>
+                                                <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
+                                                    class="form-control" id="Price" name="price"
+                                                    placeholder="Enter Price" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="quantity">Quantity</label>
+                                                <input type="text" oninput="NumbersOnly(this)" class="form-control"
+                                                    id="Quantity" name="quantity" placeholder="Enter Quantity" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- RIGHT SIDE -->
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button type="button" class="btn btn-danger" onClick="hideEditBatchModal()"
+                                    href="javascript:void(0)">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- EDIT BATCH FORM -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.container-fluid -->
-</section>
-<!-- /.content -->
-</div>
+    <!-- EDIT BATCH MODAL -->
+    <!-- DELETE BATCH MODAL -->
+    <div class="modal fade" id="DeleteBatchModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Batch</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this batch?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onClick="hideDeleteBatchModal()"
+                        href="javascript:void(0)">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="DeleteBatch">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DELETE BATCH MODAL -->
+    <script>
+    function showAddBatchModal() {
+        $('#AddBatchModal').modal('show');
+    }
+    function hideAddBatchModal() {
+        $('#AddBatchForm')[0].reset();
+        $('#AddBatchModal select').val(null).trigger('change');
+        $('#AddBatchModal').modal('hide');
+    }
+    function showEditBatchModal(batchId) {
+        $.ajax({
+            url: "{{ route('batches.edit', ':id') }}".replace(':id', batchId),
+            type: 'GET',
+            dataType: 'json',
+            success: function(batch) {
+                $('#EditBatchModal #BatchId').val(batch.id);
+                $('#EditBatchModal #InstructionalMaterial').val(batch.im_id).trigger('change');
+                $('#EditBatchModal #Name').val(batch.name);
+                var productionDate = new Date(batch.production_date);
+                var formattedDate = productionDate.toISOString().split('T')[0];
+                $('#EditBatchModal #ProductionDate').val(formattedDate);
+                $('#EditBatchModal #ProductionCost').val(batch.production_cost);
+                $('#EditBatchModal #Price').val(batch.price);
+                $('#EditBatchModal #Quantity').val(batch.quantity);
+                $('#EditBatchModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+    function hideEditBatchModal() {
+        $('#EditBatchModal').modal('hide');
+    }
+    function showDeleteBatchModal() {
+        $('#DeleteBatchModal').modal('show');
+    }
+    function hideDeleteBatchModal() {
+        $('#DeleteBatchModal').modal('hide');
+    }
+    $('#AddBatchForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            url: "{{ route('batches.store') }}",
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                hideAddBatchModal();
+                // $('#SuccessAdd').modal('show');
+                refreshBatchesTable();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+    $('#EditBatchForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        var batchId = $('#BatchId').val();
+        $.ajax({
+            url: "{{ route('batches.update', ':id') }}".replace(':id', batchId),
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                hideEditBatchModal();
+                // $('#SuccessUpdate').modal('show');
+                refreshBatchesTable();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+    $('#BatchesTable').on('click', '.delete', function(event) {
+        event.preventDefault();
+        var batchId = $(this).data('id');
+        showDeleteBatchModal();
+        $('#DeleteBatch').off().on('click', function() {
+            $.ajax({
+                url: "{{ route('batches.destroy', ':id') }}".replace(':id', batchId),
+                type: 'DELETE',
+                data: {
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    console.log(response);
+                    hideDeleteBatchModal();
+                    // $('#SuccessDelete').modal('show');
+                    refreshBatchesTable();
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+    function refreshBatchesTable() {
+        $.ajax({
+            url: "{{ route('batches.index') }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var table = $('#BatchesTable').DataTable();
+                var existingRows = table.rows().remove().draw(false);
+                data.forEach(function(batch) {
+                    var formattedDate = new Date(batch.production_date);
+                    var options = {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    };
+                    var formattedDateString = formattedDate.toLocaleDateString('en-US', options);
+                    table.row.add([
+                        batch.im.title,
+                        batch.name,
+                        formattedDateString,
+                        batch.production_cost,
+                        batch.price,
+                        batch.quantity,
+                        '<div class="text-center">' +
+                        '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
+                        batch.id + '" onclick="showEditBatchModal(' + batch.id +
+                        ')"><i class="material-icons">&#xE254;</i></a>' +
+                        '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' +
+                        batch.id + '"><i class="material-icons">&#xE872;</i></a>' +
+                        '</div>'
+                    ]);
+                });
+                table.draw();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+    function NumbersOnly(inputField) {
+        var pattern = /^[0-9]+$/;
+        var inputValue = inputField.value;
+        if (!pattern.test(inputValue)) {
+            inputField.value = inputValue.replace(/[^0-9]/g, '');
+        }
+    }
+    function AmountOnly(inputField) {
+        var inputValue = inputField.value;
+        var cleanedValue = inputValue.replace(/(\.\d*)\./, '$1');
+        var pattern = /^\d*\.?\d*$/;
+        if (!pattern.test(cleanedValue)) {
+            cleanedValue = cleanedValue.replace(/[^0-9.]/g, '');
+        }
+        inputField.value = cleanedValue;
+    }
+    $(document).ready(function() {
+        $('#BatchesTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": true,
+            "responsive": false,
+            "buttons": ["copy", "excel", "pdf", "print"],
+            "pageLength": 8
+        }).buttons().container().appendTo('#BatchesTable_wrapper .col-md-6:eq(0)');
+        refreshBatchesTable();
+    });
+    </script>
+</body>
 
+</html>
 @endsection

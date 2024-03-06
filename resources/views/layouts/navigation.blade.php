@@ -32,7 +32,7 @@
                 </a>
                 <ul class="nav nav-treeview" style="display: none;">
                     <li class="nav-item">
-                        <a href="manage_batches" class="nav-link">
+                        <a href="{{ route('batches.index') }}" class="nav-link">
                             <i class="fas fa-copy"></i>
                             <p>Batches</p>
                         </a>
