@@ -35,7 +35,6 @@ class IMController extends Controller
         }
         $request['code'] = formatInput($request['code']);
         $request['title'] = formatInput($request['title']);
-        $request['category'] = formatInput($request['category']);
         $request['college'] = $request->input('college') ? formatInput($request->input('college')) : null;
         $request['publisher'] = $request->input('publisher') ? formatInput($request->input('publisher')) : null;
         $request['edition'] = $request->input('edition') ? formatInput($request->input('edition')) : null;
@@ -75,7 +74,6 @@ class IMController extends Controller
         }
         $request['code'] = formatInput($request['code']);
         $request['title'] = formatInput($request['title']);
-        $request['category'] = formatInput($request['category']);
         $request['college'] = $request->input('college') ? formatInput($request->input('college')) : null;
         $request['publisher'] = $request->input('publisher') ? formatInput($request->input('publisher')) : null;
         $request['edition'] = $request->input('edition') ? formatInput($request->input('edition')) : null;

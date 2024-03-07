@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script> -->
+    <link rel="stylesheet" href="admin/plugins/toastr/toastr.min.css">
+    <script src="admin/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="admin/plugins/toastr/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -363,7 +365,7 @@
             success: function(response) {
                 console.log(response);
                 hideAddInstructionalMaterialModal();
-                // $('#SuccessAdd').modal('show');
+                toastr.success('The instructional material has been successfully added!');
                 refreshInstructionalMaterialsTable();
             },
             error: function(xhr, status, error) {
@@ -383,7 +385,7 @@
             success: function(response) {
                 console.log(response);
                 hideEditInstructionalMaterialModal();
-                // $('#SuccessUpdate').modal('show');
+                toastr.success('The instructional material has been successfully updated!');
                 refreshInstructionalMaterialsTable();
             },
             error: function(xhr, status, error) {
@@ -406,11 +408,12 @@
                 success: function(response) {
                     console.log(response);
                     hideDeleteInstructionalMaterialModal();
-                    // $('#SuccessDelete').modal('show');
+                    toastr.success('The instructional material has been successfully deleted!');
                     refreshInstructionalMaterialsTable();
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
+                    toastr.error('This instructional material holds other records and cannot be deleted!');
                 }
             });
         });
@@ -459,7 +462,7 @@
             "ordering": false,
             "info": true,
             "autoWidth": true,
-            "responsive": false,
+            "responsive": true,
             "buttons": ["copy", "excel", "pdf", "print"],
             "pageLength": 8
         }).buttons().container().appendTo('#InstructionalMaterialsTable_wrapper .col-md-6:eq(0)');
