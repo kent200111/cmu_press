@@ -72,7 +72,7 @@
                 </a>
                 <ul class="nav nav-treeview" style="display: none;">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('purchases.index') }}" class="nav-link">
                             <i class="fas fa-tag"></i>
                             <p>New Purchase</p>
                         </a>

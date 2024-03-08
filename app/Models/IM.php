@@ -28,7 +28,7 @@ class IM extends Model
     }
     public function batches()
     {
-        return $this->hasMany(Batch::class);
+        return $this->hasMany(Batch::class, 'im_id');
     }
     public function purchases()
     {

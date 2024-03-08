@@ -31,13 +31,13 @@
                 <table class="table table-bordered table-striped" id="BatchesTable">
                     <thead>
                         <tr>
+                            <th class="text-center">Actions</th>
                             <th>Instructional Material</th>
                             <th>Batch Name</th>
                             <th>Production Date</th>
                             <th>Production Cost</th>
                             <th>Price</th>
                             <th>Quantity</th>
-                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -347,19 +347,19 @@
                     };
                     var formattedDateString = formattedDate.toLocaleDateString('en-US', options);
                     table.row.add([
-                        batch.im.title,
-                        batch.name,
-                        formattedDateString,
-                        batch.production_cost,
-                        batch.price,
-                        batch.quantity,
                         '<div class="text-center">' +
                         '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
                         batch.id + '" onclick="showEditBatchModal(' + batch.id +
                         ')"><i class="material-icons">&#xE254;</i></a>' +
                         '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' +
                         batch.id + '"><i class="material-icons">&#xE872;</i></a>' +
-                        '</div>'
+                        '</div>',
+                        batch.im.title,
+                        batch.name,
+                        formattedDateString,
+                        batch.production_cost,
+                        batch.price,
+                        batch.quantity
                     ]);
                 });
                 table.draw();

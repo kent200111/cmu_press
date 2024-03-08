@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IMController;
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\PurchaseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,3 +24,4 @@ Route::resource('authors', AuthorController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('instructional_materials', IMController::class);
 Route::resource('batches', BatchController::class);
+Route::resource('purchases', PurchaseController::class);

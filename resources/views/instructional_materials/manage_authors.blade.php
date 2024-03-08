@@ -31,8 +31,8 @@
                 <table class="table table-bordered table-striped" id="AuthorsTable">
                     <thead>
                         <tr>
-                            <th>Author Name</th>
                             <th class="text-center">Actions</th>
+                            <th>Author Name</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -265,16 +265,16 @@
                 var existingRows = table.rows().remove().draw(false);
                 data.forEach(function(author) {
                     table.row.add([
-                        author.first_name + ' ' + (author.middle_name ? author
-                            .middle_name +
-                            ' ' : '') + author.last_name,
                         '<div class="text-center">' +
                         '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
                         author.id + '" onclick="showEditAuthorModal(' + author.id +
                         ')"><i class="material-icons">&#xE254;</i></a>' +
                         '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' +
                         author.id + '"><i class="material-icons">&#xE872;</i></a>' +
-                        '</div>'
+                        '</div>',
+                        author.first_name + ' ' + (author.middle_name ? author
+                            .middle_name +
+                            ' ' : '') + author.last_name
                     ]);
                 });
                 table.draw();

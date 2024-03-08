@@ -31,11 +31,16 @@
                 <table class="table table-bordered table-striped" id="InstructionalMaterialsTable">
                     <thead>
                         <tr>
+                            <th class="text-center">Actions</th>
                             <th>Code</th>
                             <th>Title</th>
                             <th>Authors</th>
                             <th>Category</th>
-                            <th class="text-center">Actions</th>
+                            <th>College</th>
+                            <th>Publisher</th>
+                            <th>Edition</th>
+                            <th>ISBN</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -434,17 +439,22 @@
                         authors += im.authors[0].last_name + '<br>';
                     }
                     table.row.add([
-                        im.code,
-                        im.title,
-                        authors,
-                        im.category.name,
                         '<div class="text-center">' +
                         '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
                         im.id + '" onclick="showEditInstructionalMaterialModal(' + im.id +
                         ')"><i class="material-icons">&#xE254;</i></a>' +
                         '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' +
                         im.id + '"><i class="material-icons">&#xE872;</i></a>' +
-                        '</div>'
+                        '</div>',
+                        im.code,
+                        im.title,
+                        authors,
+                        im.category.name,
+                        im.college,
+                        im.publisher,
+                        im.edition,
+                        im.isbn,
+                        im.description
                     ]);
                 });
                 table.draw();

@@ -31,9 +31,9 @@
                 <table class="table table-bordered table-striped" id="CategoriesTable">
                     <thead>
                         <tr>
+                            <th class="text-center">Actions</th>
                             <th>Category Name</th>
                             <th>Description</th>
-                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -256,15 +256,15 @@
                 var existingRows = table.rows().remove().draw(false);
                 data.forEach(function(category) {
                     table.row.add([
-                        category.name,
-                        category.description,
                         '<div class="text-center">' +
                         '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
                         category.id + '" onclick="showEditCategoryModal(' + category.id +
                         ')"><i class="material-icons">&#xE254;</i></a>' +
                         '<a href="#" class="delete" title="Delete" data-toggle="tooltip" data-id="' +
                         category.id + '"><i class="material-icons">&#xE872;</i></a>' +
-                        '</div>'
+                        '</div>',
+                        category.name,
+                        category.description
                     ]);
                 });
                 table.draw();
