@@ -13,7 +13,8 @@ return new class extends Migration {
             $table->date('production_date');
             $table->float('production_cost');
             $table->float('price');
-            $table->integer('quantity');
+            $table->integer('beginning_quantity');
+            $table->integer('available_stocks');
             $table->timestamps();
         });
     }

@@ -37,7 +37,8 @@
                             <th>Production Date</th>
                             <th>Production Cost</th>
                             <th>Price</th>
-                            <th>Quantity</th>
+                            <th>Beginning Quantity</th>
+                            <th>Available Stocks</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,9 +106,9 @@
                                                     required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="quantity">Quantity</label>
+                                                <label for="beginning_quantity">Beginning Quantity</label>
                                                 <input type="text" oninput="NumbersOnly(this)" class="form-control"
-                                                    name="quantity" placeholder="Enter Quantity" required>
+                                                    name="beginning_quantity" placeholder="Enter Beginning Quantity" required>
                                             </div>
                                         </div>
                                     </div>
@@ -188,9 +189,9 @@
                                                     placeholder="Enter Price" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="quantity">Quantity</label>
+                                                <label for="beginning_quantity">Beginning Quantity</label>
                                                 <input type="text" oninput="NumbersOnly(this)" class="form-control"
-                                                    id="Quantity" name="quantity" placeholder="Enter Quantity" required>
+                                                    id="BeginningQuantity" name="beginning_quantity" placeholder="Enter Beginning Quantity" required>
                                             </div>
                                         </div>
                                     </div>
@@ -252,7 +253,7 @@
                 $('#EditBatchModal #ProductionDate').val(formattedDate);
                 $('#EditBatchModal #ProductionCost').val(batch.production_cost);
                 $('#EditBatchModal #Price').val(batch.price);
-                $('#EditBatchModal #Quantity').val(batch.quantity);
+                $('#EditBatchModal #BeginningQuantity').val(batch.beginning_quantity);
                 $('#EditBatchModal').modal('show');
             },
             error: function(xhr, status, error) {
@@ -277,9 +278,10 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
+                var successMessage = response.success;
+                console.log(successMessage);
                 hideAddBatchModal();
-                toastr.success('The batch has been successfully added!');
+                toastr.success(successMessage);
                 refreshBatchesTable();
             },
             error: function(xhr, status, error) {
@@ -296,13 +298,16 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
+                var successMessage = response.success;
+                console.log(successMessage);
                 hideEditBatchModal();
-                toastr.success('The batch has been successfully updated!');
+                toastr.success(successMessage);
                 refreshBatchesTable();
             },
             error: function(xhr, status, error) {
-                console.error(xhr.responseText);
+                var errorMessage = JSON.parse(xhr.responseText).error;
+                console.error(errorMessage);
+                toastr.error(errorMessage);
             }
         });
     });
@@ -318,14 +323,16 @@
                     "_token": "{{ csrf_token() }}"
                 },
                 success: function(response) {
-                    console.log(response);
+                    var successMessage = response.success;
+                    console.log(successMessage);
                     hideDeleteBatchModal();
-                    toastr.success('The batch has been successfully deleted!');
+                    toastr.success(successMessage);
                     refreshBatchesTable();
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    toastr.error('This batch holds other records and cannot be deleted!');
+                    var errorMessage = JSON.parse(xhr.responseText).error;
+                    console.error(errorMessage);
+                    toastr.error(errorMessage);
                 }
             });
         });
@@ -339,13 +346,15 @@
                 var table = $('#BatchesTable').DataTable();
                 var existingRows = table.rows().remove().draw(false);
                 data.forEach(function(batch) {
-                    var formattedDate = new Date(batch.production_date);
+                    var formattedProductionDate = new Date(batch.production_date);
+                    var formattedProductionCost = batch.production_cost.toFixed(2);
+                    var formattedPrice = batch.price.toFixed(2);
                     var options = {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
                     };
-                    var formattedDateString = formattedDate.toLocaleDateString('en-US', options);
+                    var formattedProductionDateString = formattedProductionDate.toLocaleDateString('en-US', options);
                     table.row.add([
                         '<div class="text-center">' +
                         '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
@@ -356,10 +365,11 @@
                         '</div>',
                         batch.im.title,
                         batch.name,
-                        formattedDateString,
-                        batch.production_cost,
-                        batch.price,
-                        batch.quantity
+                        formattedProductionDateString,
+                        formattedProductionCost,
+                        formattedPrice,
+                        batch.beginning_quantity,
+                        batch.available_stocks
                     ]);
                 });
                 table.draw();

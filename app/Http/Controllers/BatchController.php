@@ -38,10 +38,11 @@ class BatchController extends Controller
             'production_date' => $request->input('production_date'),
             'production_cost' => $request->input('production_cost'),
             'price' => $request->input('price'),
-            'quantity' => $request->input('quantity'),
+            'beginning_quantity' => $request->input('beginning_quantity'),
+            'available_stocks' => $request->input('beginning_quantity'),
         ]);
         $batch->save();
-        return redirect()->route('batches.index');
+        return response()->json(['success' => 'The batch has been successfully added!'], 200);
     }
     public function show(batch $batch)
     {
@@ -60,20 +61,28 @@ class BatchController extends Controller
             return $input;
         }
         $request['name'] = formatInput($request['name']);
+        if ($batch->available_stocks != $batch->beginning_quantity) {
+            return response()->json(['error' => 'This batch holds other records and cannot be updated!'], 422);
+        }
         $batch->update([
             'im_id' => $request->input('instructional_material'),
             'name' => $request->input('name'),
             'production_date' => $request->input('production_date'),
             'production_cost' => $request->input('production_cost'),
             'price' => $request->input('price'),
-            'quantity' => $request->input('quantity'),
+            'beginning_quantity' => $request->input('beginning_quantity'),
+            'available_stocks' => $request->input('beginning_quantity'),
         ]);
-        return redirect()->route('batches.index');
+        return response()->json(['success' => 'The batch has been successfully updated!'], 200);
     }
     public function destroy($id)
     {
-        $batch = Batch::findOrFail($id);
-        $batch->delete();
-        return response()->json(['success' => 'Batch deleted successfully.']);
+        try {
+            $batch = Batch::findOrFail($id);
+            $batch->delete();
+            return response()->json(['success' => 'The batch has been successfully deleted!'], 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['error' => 'This batch holds other records and cannot be deleted!'], 422);
+        }
     }
 }
