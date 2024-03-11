@@ -75,11 +75,6 @@
                                                     name="instructional_material"
                                                     data-placeholder="Select Instructional Material"
                                                     style="width: 100%;" required>
-                                                    <option value="" disabled selected>Select Instructional Material
-                                                    </option>
-                                                    @foreach($ims as $im)
-                                                    <option value="{{ $im->id }}">{{ $im->title }}</option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -123,11 +118,72 @@
     <!-- NEW PURCHASE MODAL -->
     <script type="text/javascript">
     function showNewPurchaseModal() {
-        $('#NewPurchaseModal').modal('show');
+        $.ajax({
+            url: "{{ route('purchases.create') }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var selectInstructionalMaterial = $('#InstructionalMaterial');
+                selectInstructionalMaterial.empty();
+                response.forEach(function(im) {
+                    selectInstructionalMaterial.append('<option value="' + im.id + '">' + im.title +
+                        '</option>');
+                });
+                $('#NewPurchaseModal').modal('show');
+                selectInstructionalMaterial.val(null).trigger('change');
+                $('#InstructionalMaterial').on('change', function() {
+                    $('#TotalPrice').val(null);
+                    var imId = $(this).val();
+                    if (imId) {
+                        var selectedInstructionalMaterial = response.find(function(im) {
+                            return im.id == imId;
+                        });
+                        var batches = selectedInstructionalMaterial.batches;
+                        var selectImBatch = $('#ImBatch');
+                        selectImBatch.empty();
+                        batches.forEach(function(batch) {
+                            selectImBatch.append('<option value="' + batch.id + '">' + batch
+                                .name + '</option>');
+                        });
+                        selectImBatch.val(null).trigger('change');
+                    }
+                });
+                $('#ImBatch').on('change', function() {
+                    $('#TotalPrice').val(null);
+                    var batchId = $(this).val();
+                    if (batchId) {
+                        var selectedInstructionalMaterial = response.find(function(im) {
+                            return im.id == $('#InstructionalMaterial').val();
+                        });
+                        var selectedBatch = selectedInstructionalMaterial.batches.find(function(
+                            batch) {
+                            return batch.id == batchId;
+                        });
+                        $('#Price').val(selectedBatch.price.toFixed(2));
+                        var selectQuantity = $('#Quantity');
+                        selectQuantity.empty();
+                        for (var i = 1; i <= selectedBatch.available_stocks; i++) {
+                            selectQuantity.append('<option value="' + i + '">' + i + '</option>');
+                        }
+                        selectQuantity.val(null).trigger('change');
+                    } else {
+                        $('#Price').val(null);
+                        $('#Quantity').empty();
+                    }
+                });
+                $('#Price, #Quantity').on('input', function() {
+                    var price = parseFloat($('#Price').val()) || 0;
+                    var quantity = parseInt($('#Quantity').val()) || 0;
+                    var totalPrice = price * quantity;
+                    $('#TotalPrice').val(totalPrice.toFixed(2));
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     }
     function hideNewPurchaseModal() {
-        $('#NewPurchaseForm')[0].reset();
-        $('#NewPurchaseModal select').val(null).trigger('change');
         $('#NewPurchaseModal').modal('hide');
     }
     $('#NewPurchaseForm').submit(function(event) {
@@ -164,7 +220,8 @@
                         month: 'long',
                         day: 'numeric'
                     };
-                    var formattedDateSoldString = formattedDateSold.toLocaleDateString('en-US', options);
+                    var formattedDateSoldString = formattedDateSold.toLocaleDateString('en-US',
+                        options);
                     var totalPrice = purchase.batch.price.toFixed(2) * purchase.quantity;
                     table.row.add([
                         purchase.customer_name,
@@ -203,57 +260,9 @@
             "pageLength": 8
         }).buttons().container().appendTo('#PurchasesTable_wrapper .col-md-6:eq(0)');
         refreshPurchasesTable();
-        $('#InstructionalMaterial').change(function() {
-            $('#Price').val(null);
-            $('#Quantity').empty().append(
-                '<option value="" disabled selected>Select Quantity</option>');
-            $('#TotalPrice').val(null);
-            var imId = $(this).val();
-            if (imId) {
-                var selectedIM = @json($ims->keyBy('id'));
-                var batches = selectedIM[imId].batches;
-                $('#ImBatch').empty().append(
-                    '<option value="" disabled selected>Select IM Batch</option>');
-                batches.forEach(function(batch) {
-                    $('#ImBatch').append('<option value="' + batch.id + '">' + batch.name +
-                        '</option>');
-                });
-            } else {
-                $('#ImBatch').empty().append(
-                    '<option value="" disabled selected>Select IM Batch</option>');
-                $('#Price').val('');
-                $('#Quantity').empty().append(
-                    '<option value="" disabled selected>Select Quantity</option>');
-            }
-        });
-        $('#ImBatch').change(function() {
-            $('#Quantity').empty().append(
-                '<option value="" disabled selected>Select Quantity</option>');
-            $('#TotalPrice').val(null);
-            var batchId = $(this).val();
-            if (batchId) {
-                var selectedIM = @json($ims->keyBy('id'));
-                var selectedBatch = selectedIM[$('#InstructionalMaterial').val()].batches.find(batch =>
-                    batch.id == batchId);
-                var price = selectedBatch.price;
-                $('#Price').val(price.toFixed(2));
-                var available_stocks = selectedBatch.available_stocks;
-                $('#Quantity').empty().append(
-                    '<option value="" disabled selected>Select Quantity</option>');
-                for (var i = 1; i <= available_stocks; i++) {
-                    $('#Quantity').append('<option value="' + i + '">' + i + '</option>');
-                }
-            } else {
-                $('#Price').val('');
-                $('#Quantity').empty().append(
-                    '<option value="" disabled selected>Select Quantity</option>');
-            }
-            $('#Price, #Quantity').on('input', function() {
-                var price = parseFloat($('#Price').val()) || 0;
-                var quantity = parseInt($('#Quantity').val()) || 0;
-                var totalPrice = price * quantity;
-                $('#TotalPrice').val(totalPrice.toFixed(2));
-            });
+        $('#NewPurchaseModal').on('hidden.bs.modal', function(e) {
+            $('#NewPurchaseForm')[0].reset();
+            $('#NewPurchaseModal select').val(null).trigger('change');
         });
     });
     </script>

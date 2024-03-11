@@ -3,9 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Purchase;
 use App\Models\IM;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
 {
@@ -15,18 +14,21 @@ class PurchaseController extends Controller
             ->orderByDesc('updated_at')
             ->orderByDesc('created_at')
             ->get();
+        if (request()->ajax()) {
+            return response()->json($purchases);
+        } else {
+            return view('sales_management.purchase_history', compact('purchases'));
+        }
+    }
+    public function create()
+    {
         $ims = IM::with('batches')
             ->orderByDesc('updated_at')
             ->orderByDesc('created_at')
             ->get();
         if (request()->ajax()) {
-            return response()->json($purchases);
-        } else {
-            return view('sales_management.purchase_history', compact('purchases', 'ims'));
+            return response()->json($ims);
         }
-    }
-    public function create()
-    {
     }
     public function store(Request $request)
     {
