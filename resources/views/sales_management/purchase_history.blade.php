@@ -36,6 +36,7 @@
                             <th>IM Batch</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Date Sold</th>
                             <th>Total Price</th>
                         </tr>
                     </thead>
@@ -110,7 +111,7 @@
                             <div class="text-right">
                                 <button type="button" class="btn btn-danger" onClick="hideNewPurchaseModal()"
                                     href="javascript:void(0)">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="submit" class="btn btn-primary">Record Purchase</button>
                             </div>
                         </div>
                     </form>
@@ -129,6 +130,59 @@
         $('#NewPurchaseModal select').val(null).trigger('change');
         $('#NewPurchaseModal').modal('hide');
     }
+    $('#NewPurchaseForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            url: "{{ route('purchases.store') }}",
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                var successMessage = response.success;
+                console.log(successMessage);
+                hideNewPurchaseModal();
+                toastr.success(successMessage);
+                refreshPurchasesTable();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+    function refreshPurchasesTable() {
+        $.ajax({
+            url: "{{ route('purchases.index') }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var table = $('#PurchasesTable').DataTable();
+                var existingRows = table.rows().remove().draw(false);
+                data.forEach(function(purchase) {
+                    var formattedDateSold = new Date(purchase.date_sold);
+                    var options = {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    };
+                    var formattedDateSoldString = formattedDateSold.toLocaleDateString('en-US', options);
+                    var totalPrice = purchase.batch.price.toFixed(2) * purchase.quantity;
+                    table.row.add([
+                        purchase.customer_name,
+                        purchase.im.title,
+                        purchase.batch.name,
+                        purchase.batch.price.toFixed(2),
+                        purchase.quantity,
+                        formattedDateSoldString,
+                        totalPrice.toFixed(2)
+                    ]);
+                });
+                table.draw();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
     function NumbersOnly(inputField) {
         var pattern = /^[0-9]+$/;
         var inputValue = inputField.value;
@@ -137,6 +191,18 @@
         }
     }
     $(document).ready(function() {
+        $('#PurchasesTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": true,
+            "responsive": true,
+            "buttons": ["copy", "excel", "pdf", "print"],
+            "pageLength": 8
+        }).buttons().container().appendTo('#PurchasesTable_wrapper .col-md-6:eq(0)');
+        refreshPurchasesTable();
         $('#InstructionalMaterial').change(function() {
             $('#Price').val(null);
             $('#Quantity').empty().append(
