@@ -53,7 +53,7 @@ class IMController extends Controller
         $im->save();
         $authors = $request->input('authors', []);
         $im->authors()->attach($authors);
-        return redirect()->route('instructional_materials.index');
+        return response()->json(['success' => 'The instructional material has been successfully added!'], 200);
     }
     public function show(IM $im)
     {
@@ -92,13 +92,17 @@ class IMController extends Controller
         $im->touch();
         $authors = $request->input('authors', []);
         $im->authors()->sync($authors);
-        return redirect()->route('instructional_materials.index');
+        return response()->json(['success' => 'The instructional material has been successfully updated!'], 200);
     }
     public function destroy($id)
     {
-        $im = IM::findOrFail($id);
-        $im->authors()->detach();
-        $im->delete();
-        return response()->json(['success' => 'Instructional material deleted successfully.']);
+        try {
+            $im = IM::findOrFail($id);
+            $im->authors()->detach();
+            $im->delete();
+            return response()->json(['success' => 'The instructional material has been successfully deleted!'], 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['error' => 'This instructional material holds other records and cannot be deleted!'], 422);
+        }
     }
 }

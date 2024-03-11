@@ -62,7 +62,7 @@ class BatchController extends Controller
         }
         $request['name'] = formatInput($request['name']);
         if ($batch->available_stocks != $batch->beginning_quantity) {
-            return response()->json(['error' => 'This batch holds other records and cannot be updated!'], 422);
+            return response()->json(['error' => 'Updates are prohibited since instructional materials have already been sold in this batch!'], 422);
         }
         $batch->update([
             'im_id' => $request->input('instructional_material'),

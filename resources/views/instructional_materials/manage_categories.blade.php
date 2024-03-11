@@ -193,9 +193,10 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
+                var successMessage = response.success;
+                console.log(successMessage);
                 hideAddCategoryModal();
-                toastr.success('The category has been successfully added!');
+                toastr.success(successMessage);
                 refreshCategoriesTable();
             },
             error: function(xhr, status, error) {
@@ -212,9 +213,10 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
+                var successMessage = response.success;
+                console.log(successMessage);
                 hideEditCategoryModal();
-                toastr.success('The category has been successfully updated!');
+                toastr.success(successMessage);
                 refreshCategoriesTable();
             },
             error: function(xhr, status, error) {
@@ -234,14 +236,16 @@
                     "_token": "{{ csrf_token() }}"
                 },
                 success: function(response) {
-                    console.log(response);
+                    var successMessage = response.success;
+                    console.log(successMessage);
                     hideDeleteCategoryModal();
-                    toastr.success('The category has been successfully deleted!');
+                    toastr.success(successMessage);
                     refreshCategoriesTable();
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    toastr.error('This category holds other records and cannot be deleted!');
+                    var errorMessage = JSON.parse(xhr.responseText).error;
+                    console.error(errorMessage);
+                    toastr.error(errorMessage);
                 }
             });
         });

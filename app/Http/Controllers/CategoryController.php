@@ -33,7 +33,7 @@ class CategoryController extends Controller
             'description' => $request->input('description'),
         ]);
         $category->save();
-        return redirect()->route('categories.index');
+        return response()->json(['success' => 'The category has been successfully added!'], 200);
     }
     public function show(Category $category)
     {
@@ -57,12 +57,16 @@ class CategoryController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
-        return redirect()->route('categories.index');
+        return response()->json(['success' => 'The category has been successfully updated!'], 200);
     }
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        return response()->json(['success' => 'Category deleted successfully.']);
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();
+            return response()->json(['success' => 'The category has been successfully deleted!'], 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['error' => 'This category holds other records and cannot be deleted!'], 422);
+        }
     }
 }

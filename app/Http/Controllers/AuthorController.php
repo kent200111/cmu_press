@@ -35,7 +35,7 @@ class AuthorController extends Controller
             'last_name' => $request->input('last_name'),
         ]);
         $author->save();
-        return redirect()->route('authors.index');
+        return response()->json(['success' => 'The author has been successfully added!'], 200);
     }
     public function show(Author $author)
     {
@@ -61,12 +61,16 @@ class AuthorController extends Controller
             'middle_name' => $request->input('middle_name'),
             'last_name' => $request->input('last_name'),
         ]);
-        return redirect()->route('authors.index');
+        return response()->json(['success' => 'The author has been successfully updated!'], 200);
     }
     public function destroy($id)
     {
-        $author = Author::findOrFail($id);
-        $author->delete();
-        return response()->json(['success' => 'Author deleted successfully.']);
+        try {
+            $author = Author::findOrFail($id);
+            $author->delete();
+            return response()->json(['success' => 'The author has been successfully deleted!'], 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['error' => 'This author holds other records and cannot be deleted!'], 422);
+        }
     }
 }

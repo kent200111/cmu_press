@@ -171,10 +171,10 @@
                     batch.id == batchId);
                 var price = selectedBatch.price;
                 $('#Price').val(price.toFixed(2));
-                var quantity = selectedBatch.quantity;
+                var available_stocks = selectedBatch.available_stocks;
                 $('#Quantity').empty().append(
                     '<option value="" disabled selected>Select Quantity</option>');
-                for (var i = 1; i <= quantity; i++) {
+                for (var i = 1; i <= available_stocks; i++) {
                     $('#Quantity').append('<option value="' + i + '">' + i + '</option>');
                 }
             } else {

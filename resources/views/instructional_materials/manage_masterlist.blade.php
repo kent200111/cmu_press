@@ -368,9 +368,10 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
+                var successMessage = response.success;
+                console.log(successMessage);
                 hideAddInstructionalMaterialModal();
-                toastr.success('The instructional material has been successfully added!');
+                toastr.success(successMessage);
                 refreshInstructionalMaterialsTable();
             },
             error: function(xhr, status, error) {
@@ -388,9 +389,10 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
+                var successMessage = response.success;
+                console.log(successMessage);
                 hideEditInstructionalMaterialModal();
-                toastr.success('The instructional material has been successfully updated!');
+                toastr.success(successMessage);
                 refreshInstructionalMaterialsTable();
             },
             error: function(xhr, status, error) {
@@ -411,14 +413,16 @@
                     "_token": "{{ csrf_token() }}"
                 },
                 success: function(response) {
-                    console.log(response);
+                    var successMessage = response.success;
+                    console.log(successMessage);
                     hideDeleteInstructionalMaterialModal();
-                    toastr.success('The instructional material has been successfully deleted!');
+                    toastr.success(successMessage);
                     refreshInstructionalMaterialsTable();
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    toastr.error('This instructional material holds other records and cannot be deleted!');
+                    var errorMessage = JSON.parse(xhr.responseText).error;
+                    console.error(errorMessage);
+                    toastr.error(errorMessage);
                 }
             });
         });

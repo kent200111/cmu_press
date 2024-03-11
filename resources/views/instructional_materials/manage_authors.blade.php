@@ -202,9 +202,10 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
+                var successMessage = response.success;
+                console.log(successMessage);
                 hideAddAuthorModal();
-                toastr.success('The author has been successfully added!');
+                toastr.success(successMessage);
                 refreshAuthorsTable();
             },
             error: function(xhr, status, error) {
@@ -221,9 +222,10 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                console.log(response);
+                var successMessage = response.success;
+                console.log(successMessage);
                 hideEditAuthorModal();
-                toastr.success('The author has been successfully updated!');
+                toastr.success(successMessage);
                 refreshAuthorsTable();
             },
             error: function(xhr, status, error) {
@@ -243,14 +245,16 @@
                     "_token": "{{ csrf_token() }}"
                 },
                 success: function(response) {
-                    console.log(response);
+                    var successMessage = response.success;
+                    console.log(successMessage);
                     hideDeleteAuthorModal();
-                    toastr.success('The author has been successfully deleted!');
+                    toastr.success(successMessage);
                     refreshAuthorsTable();
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    toastr.error('This author holds other records and cannot be deleted!');
+                    var errorMessage = JSON.parse(xhr.responseText).error;
+                    console.error(errorMessage);
+                    toastr.error(errorMessage);
                 }
             });
         });
