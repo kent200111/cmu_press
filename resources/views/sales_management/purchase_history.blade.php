@@ -132,7 +132,7 @@
                 $('#NewPurchaseModal').modal('show');
                 selectInstructionalMaterial.val(null).trigger('change');
                 selectInstructionalMaterial.select2();
-                $('#InstructionalMaterial').on('change', function() {
+                $('#ChooseInstructionalMaterial').on('change', function() {
                     $('#TotalPrice').val(null);
                     var imId = $(this).val();
                     if (imId) {
@@ -150,12 +150,12 @@
                         selectImBatch.select2();
                     }
                 });
-                $('#ImBatch').on('change', function() {
+                $('#ChooseImBatch').on('change', function() {
                     $('#TotalPrice').val(null);
                     var batchId = $(this).val();
                     if (batchId) {
                         var selectedInstructionalMaterial = response.find(function(im) {
-                            return im.id == $('#InstructionalMaterial').val();
+                            return im.id == $('#ChooseInstructionalMaterial').val();
                         });
                         var selectedBatch = selectedInstructionalMaterial.batches.find(function(
                             batch) {
@@ -171,12 +171,12 @@
                         selectQuantity.select2();
                     } else {
                         $('#Price').val(null);
-                        $('#Quantity').empty();
+                        $('#ChooseQuantity').empty();
                     }
                 });
-                $('#Price, #Quantity').on('input', function() {
+                $('#Price, #ChooseQuantity').on('input', function() {
                     var price = parseFloat($('#Price').val()) || 0;
-                    var quantity = parseInt($('#Quantity').val()) || 0;
+                    var quantity = parseInt($('#ChooseQuantity').val()) || 0;
                     var totalPrice = price * quantity;
                     $('#TotalPrice').val(totalPrice.toFixed(2));
                 });
