@@ -526,7 +526,7 @@
             "pageLength": 8
         }).buttons().container().appendTo('#InstructionalMaterialsTable_wrapper .col-md-6:eq(0)');
         refreshInstructionalMaterialsTable();
-        setInterval(refreshInstructionalMaterialsTable, 3000);
+        setInterval(refreshInstructionalMaterialsTable, 60000);
         $('#AddInstructionalMaterialModal').on('hidden.bs.modal', function(e) {
             $('#AddInstructionalMaterialForm')[0].reset();
             $('#AddInstructionalMaterialModal select').val(null).trigger('change');

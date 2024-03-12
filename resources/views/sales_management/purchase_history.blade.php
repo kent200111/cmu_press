@@ -264,7 +264,7 @@
             "pageLength": 8
         }).buttons().container().appendTo('#PurchasesTable_wrapper .col-md-6:eq(0)');
         refreshPurchasesTable();
-        setInterval(refreshPurchasesTable, 3000);
+        setInterval(refreshPurchasesTable, 60000);
         $('#NewPurchaseModal').on('hidden.bs.modal', function(e) {
             $('#NewPurchaseForm')[0].reset();
             $('#NewPurchaseModal select').val(null).trigger('change');

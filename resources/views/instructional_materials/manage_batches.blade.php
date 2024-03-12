@@ -435,7 +435,7 @@
             "pageLength": 8
         }).buttons().container().appendTo('#BatchesTable_wrapper .col-md-6:eq(0)');
         refreshBatchesTable();
-        setInterval(refreshBatchesTable, 3000);
+        setInterval(refreshBatchesTable, 60000);
         $('#AddBatchModal').on('hidden.bs.modal', function(e) {
             $('#AddBatchForm')[0].reset();
             $('#AddBatchModal select').val(null).trigger('change');

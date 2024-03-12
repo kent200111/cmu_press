@@ -292,7 +292,7 @@
             "pageLength": 8
         }).buttons().container().appendTo('#CategoriesTable_wrapper .col-md-6:eq(0)');
         refreshCategoriesTable();
-        setInterval(refreshCategoriesTable, 3000);
+        setInterval(refreshCategoriesTable, 60000);
         $('#AddCategoryModal').on('hidden.bs.modal', function(e) {
             $('#AddCategoryForm')[0].reset();
         });

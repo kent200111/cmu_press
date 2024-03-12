@@ -302,7 +302,7 @@
             "pageLength": 8
         }).buttons().container().appendTo('#AuthorsTable_wrapper .col-md-6:eq(0)');
         refreshAuthorsTable();
-        setInterval(refreshAuthorsTable, 3000);
+        setInterval(refreshAuthorsTable, 60000);
         $('#AddAuthorModal').on('hidden.bs.modal', function(e) {
             $('#AddAuthorForm')[0].reset();
         });
