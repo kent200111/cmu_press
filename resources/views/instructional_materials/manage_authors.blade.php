@@ -165,7 +165,6 @@
         $('#AddAuthorModal').modal('show');
     }
     function hideAddAuthorModal() {
-        $('#AddAuthorForm')[0].reset();
         $('#AddAuthorModal').modal('hide');
     }
     function showEditAuthorModal(authorId) {
@@ -301,6 +300,9 @@
             "pageLength": 8
         }).buttons().container().appendTo('#AuthorsTable_wrapper .col-md-6:eq(0)');
         refreshAuthorsTable();
+        $('#AddAuthorModal').on('hidden.bs.modal', function(e) {
+            $('#AddAuthorForm')[0].reset();
+        });
     });
     </script>
 </body>

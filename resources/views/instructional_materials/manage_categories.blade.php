@@ -157,7 +157,6 @@
         $('#AddCategoryModal').modal('show');
     }
     function hideAddCategoryModal() {
-        $('#AddCategoryForm')[0].reset();
         $('#AddCategoryModal').modal('hide');
     }
     function showEditCategoryModal(categoryId) {
@@ -291,6 +290,9 @@
             "pageLength": 8
         }).buttons().container().appendTo('#CategoriesTable_wrapper .col-md-6:eq(0)');
         refreshCategoriesTable();
+        $('#AddCategoryModal').on('hidden.bs.modal', function(e) {
+            $('#AddCategoryForm')[0].reset();
+        });
     });
     </script>
 </body>

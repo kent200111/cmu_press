@@ -15,16 +15,23 @@ class IMController extends Controller
             ->orderByDesc('updated_at')
             ->orderByDesc('created_at')
             ->get();
-        $authors = Author::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
-        $categories = Category::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
         if (request()->ajax()) {
             return response()->json($ims);
         } else {
-            return view('instructional_materials.manage_masterlist', compact('ims', 'authors', 'categories'));
+            return view('instructional_materials.manage_masterlist', compact('ims'));
         }
     }
     public function create()
     {
+        $authors = Author::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
+        $categories = Category::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
+        $data = [
+            'authors' => $authors,
+            'categories' => $categories,
+        ];
+        if (request()->ajax()) {
+            return response()->json($data);
+        }
     }
     public function store(Request $request)
     {

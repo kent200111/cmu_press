@@ -235,8 +235,6 @@
         $('#AddBatchModal').modal('show');
     }
     function hideAddBatchModal() {
-        $('#AddBatchForm')[0].reset();
-        $('#AddBatchModal select').val(null).trigger('change');
         $('#AddBatchModal').modal('hide');
     }
     function showEditBatchModal(batchId) {
@@ -347,8 +345,6 @@
                 var existingRows = table.rows().remove().draw(false);
                 data.forEach(function(batch) {
                     var formattedProductionDate = new Date(batch.production_date);
-                    var formattedProductionCost = batch.production_cost.toFixed(2);
-                    var formattedPrice = batch.price.toFixed(2);
                     var options = {
                         year: 'numeric',
                         month: 'long',
@@ -366,8 +362,8 @@
                         batch.im.title,
                         batch.name,
                         formattedProductionDateString,
-                        formattedProductionCost,
-                        formattedPrice,
+                        batch.production_cost.toFixed(2),
+                        batch.price.toFixed(2),
                         batch.beginning_quantity,
                         batch.available_stocks
                     ]);
@@ -408,6 +404,10 @@
             "pageLength": 8
         }).buttons().container().appendTo('#BatchesTable_wrapper .col-md-6:eq(0)');
         refreshBatchesTable();
+        $('#AddBatchModal').on('hidden.bs.modal', function(e) {
+            $('#AddBatchForm')[0].reset();
+            $('#AddBatchModal select').val(null).trigger('change');
+        });
     });
     </script>
 </body>

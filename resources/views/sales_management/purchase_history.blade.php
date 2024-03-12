@@ -131,6 +131,7 @@
                 });
                 $('#NewPurchaseModal').modal('show');
                 selectInstructionalMaterial.val(null).trigger('change');
+                selectInstructionalMaterial.select2();
                 $('#InstructionalMaterial').on('change', function() {
                     $('#TotalPrice').val(null);
                     var imId = $(this).val();
@@ -146,6 +147,7 @@
                                 .name + '</option>');
                         });
                         selectImBatch.val(null).trigger('change');
+                        selectImBatch.select2();
                     }
                 });
                 $('#ImBatch').on('change', function() {
@@ -166,6 +168,7 @@
                             selectQuantity.append('<option value="' + i + '">' + i + '</option>');
                         }
                         selectQuantity.val(null).trigger('change');
+                        selectQuantity.select2();
                     } else {
                         $('#Price').val(null);
                         $('#Quantity').empty();

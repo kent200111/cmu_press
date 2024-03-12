@@ -80,23 +80,15 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="authors">Authors</label>
-                                                <select multiple="multiple" class="select2 form-control"
+                                                <select multiple="multiple" class="select2 form-control" id="AddAuthors"
                                                     name="authors[]" data-placeholder="Select Authors"
                                                     style="width: 100%;" required>
-                                                    @foreach($authors as $author)
-                                                    <option value="{{ $author->id }}">{{ $author->first_name }}
-                                                        {{ $author->last_name }}</option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="category">Category</label>
-                                                <select class="select2 form-control" name="category"
+                                                <select class="select2 form-control" id="AddCategory" name="category"
                                                     data-placeholder="Select Category" style="width: 100%;" required>
-                                                    <option value="" disabled selected>Select Category</option>
-                                                    @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -190,38 +182,30 @@
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="code">Code</label>
-                                                <input type="text" class="form-control" id="Code" name="code"
+                                                <input type="text" class="form-control" id="EditCode" name="code"
                                                     placeholder="Enter Code" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="title">Title</label>
-                                                <input type="text" class="form-control" id="Title" name="title"
+                                                <input type="text" class="form-control" id="EditTitle" name="title"
                                                     placeholder="Enter Title" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="authors">Authors</label>
-                                                <select multiple="multiple" class="select2 form-control" id="Authors"
-                                                    name="authors[]" data-placeholder="Select Authors"
+                                                <select multiple="multiple" class="select2 form-control"
+                                                    id="EditAuthors" name="authors[]" data-placeholder="Select Authors"
                                                     style="width: 100%;" required>
-                                                    @foreach($authors as $author)
-                                                    <option value="{{ $author->id }}">{{ $author->first_name }}
-                                                        {{ $author->last_name }}</option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="category">Category</label>
-                                                <select class="select2 form-control" id="Category" name="category"
+                                                <select class="select2 form-control" id="EditCategory" name="category"
                                                     data-placeholder="Select Category" style="width: 100%;" required>
-                                                    <option value="" disabled selected>Select Category</option>
-                                                    @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="college">College</label>
-                                                <select class="select2 form-control" id="College" name="college"
+                                                <select class="select2 form-control" id="EditCollege" name="college"
                                                     data-placeholder="Select College" style="width: 100%;">
                                                     <option value="" disabled selected>Select College</option>
                                                     <option value=" "></option>
@@ -247,7 +231,7 @@
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="publisher">Publisher</label>
-                                                <select class="select2 form-control" id="Publisher" name="publisher"
+                                                <select class="select2 form-control" id="EditPublisher" name="publisher"
                                                     data-placeholder="Select Publisher" style="width: 100%;">
                                                     <option value="" disabled selected>Select Publisher</option>
                                                     <option value=" "></option>
@@ -257,17 +241,17 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="edition">Edition</label>
-                                                <input type="text" class="form-control" id="Edition" name="edition"
+                                                <input type="text" class="form-control" id="EditEdition" name="edition"
                                                     placeholder="Enter Edition">
                                             </div>
                                             <div class="form-group">
                                                 <label for="isbn">ISBN</label>
-                                                <input type="text" class="form-control" id="Isbn" name="isbn"
+                                                <input type="text" class="form-control" id="EditIsbn" name="isbn"
                                                     placeholder="Enter ISBN">
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Description</label>
-                                                <textarea type="text" class="form-control" id="Description"
+                                                <textarea type="text" class="form-control" id="EditDescription"
                                                     name="description" placeholder="Enter Description"
                                                     style="height: 124px;"></textarea>
                                             </div>
@@ -311,40 +295,99 @@
     <!-- DELETE INSTRUCTIONAL MATERIAL MODAL -->
     <script>
     function showAddInstructionalMaterialModal() {
-        $('#AddInstructionalMaterialModal').modal('show');
+        $.ajax({
+            url: "{{ route('instructional_materials.create') }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var selectAuthors = $('#AddAuthors');
+                selectAuthors.empty();
+                response.authors.forEach(function(author) {
+                    selectAuthors.append('<option value="' + author.id + '">' + author
+                        .first_name + ' ' + author.last_name + '</option>');
+                });
+                selectAuthors.val(null).trigger('change');
+                selectAuthors.select2();
+                var selectCategory = $('#AddCategory');
+                selectCategory.empty();
+                response.categories.forEach(function(category) {
+                    selectCategory.append('<option value="' + category.id + '">' + category
+                        .name + '</option>');
+                });
+                selectCategory.val(null).trigger('change');
+                selectCategory.select2();
+                $('#AddInstructionalMaterialModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     }
     function hideAddInstructionalMaterialModal() {
-        $('#AddInstructionalMaterialForm')[0].reset();
-        $('#AddInstructionalMaterialModal select').val(null).trigger('change');
         $('#AddInstructionalMaterialModal').modal('hide');
     }
     function showEditInstructionalMaterialModal(instructionalMaterialId) {
         $.ajax({
-            url: "{{ route('instructional_materials.edit', ':id') }}".replace(':id', instructionalMaterialId),
+            url: "{{ route('instructional_materials.create') }}",
             type: 'GET',
             dataType: 'json',
-            success: function(instructionalMaterial) {
-                $('#EditInstructionalMaterialModal #InstructionalMaterialId').val(instructionalMaterial.id);
-                $('#EditInstructionalMaterialModal #Code').val(instructionalMaterial.code);
-                $('#EditInstructionalMaterialModal #Title').val(instructionalMaterial.title);
-                $('#EditInstructionalMaterialModal #Category').val(instructionalMaterial.category_id)
-                    .trigger('change');
-                $('#EditInstructionalMaterialModal #College').val(instructionalMaterial.college).trigger(
-                    'change');
-                $('#EditInstructionalMaterialModal #Publisher').val(instructionalMaterial.publisher)
-                    .trigger('change');
-                $('#EditInstructionalMaterialModal #Edition').val(instructionalMaterial.edition);
-                $('#EditInstructionalMaterialModal #Isbn').val(instructionalMaterial.isbn);
-                $('#EditInstructionalMaterialModal #Description').val(instructionalMaterial.description);
-                var authorsSelect = $('#EditInstructionalMaterialModal #Authors');
-                authorsSelect.find('option').each(function() {
-                    var authorId = $(this).val();
-                    $(this).prop('selected', instructionalMaterial.authors.some(function(author) {
-                        return author.id == authorId;
-                    }));
+            success: function(response) {
+                var selectAuthors = $('#EditAuthors');
+                selectAuthors.empty();
+                response.authors.forEach(function(author) {
+                    selectAuthors.append('<option value="' + author.id + '">' + author
+                        .first_name + ' ' + author.last_name + '</option>');
                 });
-                authorsSelect.trigger('change');
-                $('#EditInstructionalMaterialModal').modal('show');
+                selectAuthors.select2();
+                var selectCategory = $('#EditCategory');
+                selectCategory.empty();
+                response.categories.forEach(function(category) {
+                    selectCategory.append('<option value="' + category.id + '">' + category
+                        .name + '</option>');
+                });
+                selectCategory.select2();
+                $.ajax({
+                    url: "{{ route('instructional_materials.edit', ':id') }}".replace(':id',
+                        instructionalMaterialId),
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(instructionalMaterial) {
+                        $('#InstructionalMaterialId').val(
+                            instructionalMaterial.id);
+                        $('#EditCode').val(instructionalMaterial
+                            .code);
+                        $('#EditTitle').val(instructionalMaterial
+                            .title);
+                        $('#EditCategory').val(instructionalMaterial
+                                .category_id)
+                            .trigger('change');
+                        $('#EditCollege').val(instructionalMaterial
+                            .college).trigger(
+                            'change');
+                        $('#EditPublisher').val(
+                                instructionalMaterial.publisher)
+                            .trigger('change');
+                        $('#EditEdition').val(instructionalMaterial
+                            .edition);
+                        $('#EditIsbn').val(instructionalMaterial
+                            .isbn);
+                        $('#EditDescription').val(
+                            instructionalMaterial.description);
+                        var selectAuthors = $('#EditAuthors');
+                        selectAuthors.find('option').each(function() {
+                            var authorId = $(this).val();
+                            $(this).prop('selected', instructionalMaterial.authors.some(
+                                function(author) {
+                                    return author.id == authorId;
+                                }));
+                        });
+                        selectAuthors.trigger('change');
+                        $('#EditInstructionalMaterialModal').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
@@ -375,6 +418,7 @@
                 refreshInstructionalMaterialsTable();
             },
             error: function(xhr, status, error) {
+                location.reload();
                 console.error(xhr.responseText);
             }
         });
@@ -396,6 +440,7 @@
                 refreshInstructionalMaterialsTable();
             },
             error: function(xhr, status, error) {
+                location.reload();
                 console.error(xhr.responseText);
             }
         });
@@ -481,6 +526,11 @@
             "pageLength": 8
         }).buttons().container().appendTo('#InstructionalMaterialsTable_wrapper .col-md-6:eq(0)');
         refreshInstructionalMaterialsTable();
+        setInterval(refreshInstructionalMaterialsTable, 3000);
+        $('#AddInstructionalMaterialModal').on('hidden.bs.modal', function(e) {
+            $('#AddInstructionalMaterialForm')[0].reset();
+            $('#AddInstructionalMaterialModal select').val(null).trigger('change');
+        });
     });
     </script>
 </body>
