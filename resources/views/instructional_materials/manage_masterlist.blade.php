@@ -80,14 +80,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="authors">Authors</label>
-                                                <select multiple="multiple" class="select2 form-control" id="AddAuthors"
+                                                <select multiple="multiple" class="select2 form-control" id="ChooseAuthors"
                                                     name="authors[]" data-placeholder="Select Authors"
                                                     style="width: 100%;" required>
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="category">Category</label>
-                                                <select class="select2 form-control" id="AddCategory" name="category"
+                                                <select class="select2 form-control" id="ChooseCategory" name="category"
                                                     data-placeholder="Select Category" style="width: 100%;" required>
                                                 </select>
                                             </div>
@@ -300,7 +300,7 @@
             type: 'GET',
             dataType: 'json',
             success: function(response) {
-                var selectAuthors = $('#AddAuthors');
+                var selectAuthors = $('#ChooseAuthors');
                 selectAuthors.empty();
                 response.authors.forEach(function(author) {
                     selectAuthors.append('<option value="' + author.id + '">' + author
@@ -308,7 +308,7 @@
                 });
                 selectAuthors.val(null).trigger('change');
                 selectAuthors.select2();
-                var selectCategory = $('#AddCategory');
+                var selectCategory = $('#ChooseCategory');
                 selectCategory.empty();
                 response.categories.forEach(function(category) {
                     selectCategory.append('<option value="' + category.id + '">' + category

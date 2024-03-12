@@ -107,12 +107,12 @@
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="name">Category Name</label>
-                                                <input type="text" class="form-control" id="Name" name="name"
+                                                <input type="text" class="form-control" id="EditName" name="name"
                                                     placeholder="Enter Category Name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Description</label>
-                                                <textarea type="text" class="form-control" id="Description"
+                                                <textarea type="text" class="form-control" id="EditDescription"
                                                     name="description" placeholder="Enter Description"
                                                     style="height: 100px;"></textarea>
                                             </div>
@@ -165,9 +165,9 @@
             type: 'GET',
             dataType: 'json',
             success: function(category) {
-                $('#EditCategoryModal #CategoryId').val(category.id);
-                $('#EditCategoryModal #Name').val(category.name);
-                $('#EditCategoryModal #Description').val(category.description);
+                $('#CategoryId').val(category.id);
+                $('#EditName').val(category.name);
+                $('#EditDescription').val(category.description);
                 $('#EditCategoryModal').modal('show');
             },
             error: function(xhr, status, error) {
@@ -199,6 +199,7 @@
                 refreshCategoriesTable();
             },
             error: function(xhr, status, error) {
+                location.reload();
                 console.error(xhr.responseText);
             }
         });
@@ -219,6 +220,7 @@
                 refreshCategoriesTable();
             },
             error: function(xhr, status, error) {
+                location.reload();
                 console.error(xhr.responseText);
             }
         });
@@ -290,6 +292,7 @@
             "pageLength": 8
         }).buttons().container().appendTo('#CategoriesTable_wrapper .col-md-6:eq(0)');
         refreshCategoriesTable();
+        setInterval(refreshCategoriesTable, 3000);
         $('#AddCategoryModal').on('hidden.bs.modal', function(e) {
             $('#AddCategoryForm')[0].reset();
         });

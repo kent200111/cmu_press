@@ -111,17 +111,17 @@
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="first_name">First Name</label>
-                                                <input type="text" class="form-control" id="FirstName" name="first_name"
+                                                <input type="text" class="form-control" id="EditFirstName" name="first_name"
                                                     placeholder="Enter First Name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="middle_name">Middle Name</label>
-                                                <input type="text" class="form-control" id="MiddleName"
+                                                <input type="text" class="form-control" id="EditMiddleName"
                                                     name="middle_name" placeholder="Enter Middle Name">
                                             </div>
                                             <div class="form-group">
                                                 <label for="last_name">Last Name</label>
-                                                <input type="text" class="form-control" id="LastName" name="last_name"
+                                                <input type="text" class="form-control" id="EditLastName" name="last_name"
                                                     placeholder="Enter Last Name" required>
                                             </div>
                                         </div>
@@ -173,10 +173,10 @@
             type: 'GET',
             dataType: 'json',
             success: function(author) {
-                $('#EditAuthorModal #AuthorId').val(author.id);
-                $('#EditAuthorModal #FirstName').val(author.first_name);
-                $('#EditAuthorModal #MiddleName').val(author.middle_name);
-                $('#EditAuthorModal #LastName').val(author.last_name);
+                $('#AuthorId').val(author.id);
+                $('#EditFirstName').val(author.first_name);
+                $('#EditMiddleName').val(author.middle_name);
+                $('#EditLastName').val(author.last_name);
                 $('#EditAuthorModal').modal('show');
             },
             error: function(xhr, status, error) {
@@ -208,6 +208,7 @@
                 refreshAuthorsTable();
             },
             error: function(xhr, status, error) {
+                location.reload();
                 console.error(xhr.responseText);
             }
         });
@@ -228,6 +229,7 @@
                 refreshAuthorsTable();
             },
             error: function(xhr, status, error) {
+                location.reload();
                 console.error(xhr.responseText);
             }
         });
@@ -300,6 +302,7 @@
             "pageLength": 8
         }).buttons().container().appendTo('#AuthorsTable_wrapper .col-md-6:eq(0)');
         refreshAuthorsTable();
+        setInterval(refreshAuthorsTable, 3000);
         $('#AddAuthorModal').on('hidden.bs.modal', function(e) {
             $('#AddAuthorForm')[0].reset();
         });

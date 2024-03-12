@@ -71,7 +71,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="instructional_material">Instructional Material</label>
-                                                <select class="select2 form-control" id="InstructionalMaterial"
+                                                <select class="select2 form-control" id="ChooseInstructionalMaterial"
                                                     name="instructional_material"
                                                     data-placeholder="Select Instructional Material"
                                                     style="width: 100%;" required>
@@ -79,7 +79,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="im_batch">IM Batch</label>
-                                                <select class="select2 form-control" id="ImBatch" name="im_batch"
+                                                <select class="select2 form-control" id="ChooseImBatch" name="im_batch"
                                                     data-placeholder="Select IM Batch" style="width: 100%;" required>
                                                 </select>
                                             </div>
@@ -90,7 +90,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="quantity">Quantity</label>
-                                                <select class="select2 form-control" id="Quantity" name="quantity"
+                                                <select class="select2 form-control" id="ChooseQuantity" name="quantity"
                                                     data-placeholder="Select Quantity" style="width: 100%;" required>
                                                 </select>
                                             </div>
@@ -123,7 +123,7 @@
             type: 'GET',
             dataType: 'json',
             success: function(response) {
-                var selectInstructionalMaterial = $('#InstructionalMaterial');
+                var selectInstructionalMaterial = $('#ChooseInstructionalMaterial');
                 selectInstructionalMaterial.empty();
                 response.forEach(function(im) {
                     selectInstructionalMaterial.append('<option value="' + im.id + '">' + im.title +
@@ -140,7 +140,7 @@
                             return im.id == imId;
                         });
                         var batches = selectedInstructionalMaterial.batches;
-                        var selectImBatch = $('#ImBatch');
+                        var selectImBatch = $('#ChooseImBatch');
                         selectImBatch.empty();
                         batches.forEach(function(batch) {
                             selectImBatch.append('<option value="' + batch.id + '">' + batch
@@ -162,7 +162,7 @@
                             return batch.id == batchId;
                         });
                         $('#Price').val(selectedBatch.price.toFixed(2));
-                        var selectQuantity = $('#Quantity');
+                        var selectQuantity = $('#ChooseQuantity');
                         selectQuantity.empty();
                         for (var i = 1; i <= selectedBatch.available_stocks; i++) {
                             selectQuantity.append('<option value="' + i + '">' + i + '</option>');
@@ -204,6 +204,7 @@
                 refreshPurchasesTable();
             },
             error: function(xhr, status, error) {
+                location.reload();
                 console.error(xhr.responseText);
             }
         });
@@ -263,6 +264,7 @@
             "pageLength": 8
         }).buttons().container().appendTo('#PurchasesTable_wrapper .col-md-6:eq(0)');
         refreshPurchasesTable();
+        setInterval(refreshPurchasesTable, 3000);
         $('#NewPurchaseModal').on('hidden.bs.modal', function(e) {
             $('#NewPurchaseForm')[0].reset();
             $('#NewPurchaseModal select').val(null).trigger('change');

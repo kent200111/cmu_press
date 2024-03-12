@@ -14,15 +14,18 @@ class BatchController extends Controller
             ->orderByDesc('updated_at')
             ->orderByDesc('created_at')
             ->get();
-        $ims = IM::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
         if (request()->ajax()) {
             return response()->json($batches);
         } else {
-            return view('instructional_materials.manage_batches', compact('batches', 'ims'));
+            return view('instructional_materials.manage_batches', compact('batches'));
         }
     }
     public function create()
     {
+        $ims = IM::orderBy(DB::raw('COALESCE(updated_at, created_at)'), 'desc')->get();
+        if (request()->ajax()) {
+            return response()->json($ims);
+        }
     }
     public function store(Request $request)
     {

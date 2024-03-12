@@ -68,14 +68,10 @@
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="instructional_material">Instructional Material</label>
-                                                <select class="select2 form-control" name="instructional_material"
+                                                <select class="select2 form-control" id="ChooseInstructionalMaterial"
+                                                    name="instructional_material"
                                                     data-placeholder="Select Instructional Material"
                                                     style="width: 100%;" required>
-                                                    <option value="" disabled selected>Select Instructional Material
-                                                    </option>
-                                                    @foreach($ims as $im)
-                                                    <option value="{{ $im->id }}">{{ $im->title }}</option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -108,7 +104,8 @@
                                             <div class="form-group">
                                                 <label for="beginning_quantity">Beginning Quantity</label>
                                                 <input type="text" oninput="NumbersOnly(this)" class="form-control"
-                                                    name="beginning_quantity" placeholder="Enter Beginning Quantity" required>
+                                                    name="beginning_quantity" placeholder="Enter Beginning Quantity"
+                                                    required>
                                             </div>
                                         </div>
                                     </div>
@@ -149,25 +146,20 @@
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="instructional_material">Instructional Material</label>
-                                                <select class="select2 form-control" id="InstructionalMaterial"
+                                                <select class="select2 form-control" id="EditInstructionalMaterial"
                                                     name="instructional_material"
                                                     data-placeholder="Select Instructional Material"
                                                     style="width: 100%;" required>
-                                                    <option value="" disabled selected>Select Instructional Material
-                                                    </option>
-                                                    @foreach($ims as $im)
-                                                    <option value="{{ $im->id }}">{{ $im->title }}</option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="name">Batch Name</label>
-                                                <input type="text" class="form-control" id="Name" name="name"
+                                                <input type="text" class="form-control" id="EditName" name="name"
                                                     placeholder="Enter Batch Name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="production_date">Production Date</label>
-                                                <input type="date" class="form-control" id="ProductionDate"
+                                                <input type="date" class="form-control" id="EditProductionDate"
                                                     name="production_date" required>
                                             </div>
                                         </div>
@@ -179,19 +171,20 @@
                                             <div class="form-group">
                                                 <label for="production_cost">Production Cost</label>
                                                 <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
-                                                    class="form-control" id="ProductionCost" name="production_cost"
+                                                    class="form-control" id="EditProductionCost" name="production_cost"
                                                     placeholder="Enter Production Cost" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="price">Price</label>
                                                 <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
-                                                    class="form-control" id="Price" name="price"
+                                                    class="form-control" id="EditPrice" name="price"
                                                     placeholder="Enter Price" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="beginning_quantity">Beginning Quantity</label>
                                                 <input type="text" oninput="NumbersOnly(this)" class="form-control"
-                                                    id="BeginningQuantity" name="beginning_quantity" placeholder="Enter Beginning Quantity" required>
+                                                    id="EditBeginningQuantity" name="beginning_quantity"
+                                                    placeholder="Enter Beginning Quantity" required>
                                             </div>
                                         </div>
                                     </div>
@@ -232,27 +225,63 @@
     <!-- DELETE BATCH MODAL -->
     <script>
     function showAddBatchModal() {
-        $('#AddBatchModal').modal('show');
+        $.ajax({
+            url: "{{ route('batches.create') }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var selectInstructionalMaterial = $('#ChooseInstructionalMaterial');
+                selectInstructionalMaterial.empty();
+                response.forEach(function(im) {
+                    selectInstructionalMaterial.append('<option value="' + im.id + '">' + im.title +
+                        '</option>');
+                });
+                selectInstructionalMaterial.val(null).trigger('change');
+                selectInstructionalMaterial.select2();
+                $('#AddBatchModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     }
     function hideAddBatchModal() {
         $('#AddBatchModal').modal('hide');
     }
     function showEditBatchModal(batchId) {
         $.ajax({
-            url: "{{ route('batches.edit', ':id') }}".replace(':id', batchId),
+            url: "{{ route('batches.create') }}",
             type: 'GET',
             dataType: 'json',
-            success: function(batch) {
-                $('#EditBatchModal #BatchId').val(batch.id);
-                $('#EditBatchModal #InstructionalMaterial').val(batch.im_id).trigger('change');
-                $('#EditBatchModal #Name').val(batch.name);
-                var productionDate = new Date(batch.production_date);
-                var formattedDate = productionDate.toISOString().split('T')[0];
-                $('#EditBatchModal #ProductionDate').val(formattedDate);
-                $('#EditBatchModal #ProductionCost').val(batch.production_cost);
-                $('#EditBatchModal #Price').val(batch.price);
-                $('#EditBatchModal #BeginningQuantity').val(batch.beginning_quantity);
-                $('#EditBatchModal').modal('show');
+            success: function(response) {
+                var selectInstructionalMaterial = $('#EditInstructionalMaterial');
+                selectInstructionalMaterial.empty();
+                response.forEach(function(im) {
+                    selectInstructionalMaterial.append('<option value="' + im.id + '">' + im.title +
+                        '</option>');
+                });
+                selectInstructionalMaterial.select2();
+                $.ajax({
+                    url: "{{ route('batches.edit', ':id') }}".replace(':id', batchId),
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(batch) {
+                        $('#BatchId').val(batch.id);
+                        $('#EditInstructionalMaterial').val(batch.im_id).trigger('change');
+                        $('#EditName').val(batch.name);
+                        var productionDate = new Date(batch.production_date);
+                        var formattedProductionDate = productionDate.toISOString().split('T')[
+                        0];
+                        $('#EditProductionDate').val(formattedProductionDate);
+                        $('#EditProductionCost').val(batch.production_cost.toFixed(2));
+                        $('#EditPrice').val(batch.price.toFixed(2));
+                        $('#EditBeginningQuantity').val(batch.beginning_quantity);
+                        $('#EditBatchModal').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
@@ -283,6 +312,7 @@
                 refreshBatchesTable();
             },
             error: function(xhr, status, error) {
+                location.reload();
                 console.error(xhr.responseText);
             }
         });
@@ -350,7 +380,8 @@
                         month: 'long',
                         day: 'numeric'
                     };
-                    var formattedProductionDateString = formattedProductionDate.toLocaleDateString('en-US', options);
+                    var formattedProductionDateString = formattedProductionDate.toLocaleDateString(
+                        'en-US', options);
                     table.row.add([
                         '<div class="text-center">' +
                         '<a href="#" class="edit" title="Edit" data-toggle="tooltip" data-id="' +
@@ -404,6 +435,7 @@
             "pageLength": 8
         }).buttons().container().appendTo('#BatchesTable_wrapper .col-md-6:eq(0)');
         refreshBatchesTable();
+        setInterval(refreshBatchesTable, 3000);
         $('#AddBatchModal').on('hidden.bs.modal', function(e) {
             $('#AddBatchForm')[0].reset();
             $('#AddBatchModal select').val(null).trigger('change');
