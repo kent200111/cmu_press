@@ -103,8 +103,11 @@ class IMController extends Controller
     }
     public function destroy($id)
     {
+        $im = IM::findOrFail($id);
+        if ($im->batches()->exists()) {
+            return response()->json(['error' => 'This instructional material holds other records and cannot be deleted!'], 422);
+        }
         try {
-            $im = IM::findOrFail($id);
             $im->authors()->detach();
             $im->delete();
             return response()->json(['success' => 'The instructional material has been successfully deleted!'], 200);
