@@ -13,281 +13,288 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js"></script>
 </head>
 
-<body>
-    <div class="container-fluid">
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <div class="container-fluid">
+            <br>
+            <a class="btn btn-primary" onClick="showAddInstructionalMaterialModal()" href="javascript:void(0)">
+                <i class="fas fa-plus"></i> Add Instructional Material
+            </a>
+            <br><br>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Manage Instructional Materials</h3>
+                </div>
+                <div class="card-body">
+                    <!-- INSTRUCTIONAL MATERIALS TABLE -->
+                    <table class="table table-bordered table-striped" id="InstructionalMaterialsTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Actions</th>
+                                <th>Code</th>
+                                <th>Title</th>
+                                <th>Authors</th>
+                                <th>Category</th>
+                                <th>College</th>
+                                <th>Publisher</th>
+                                <th>Edition</th>
+                                <th>ISBN</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <!-- INSTRUCTIONAL MATERIALS TABLE -->
+                </div>
+            </div>
+        </div>
         <br>
-        <a class="btn btn-primary" onClick="showAddInstructionalMaterialModal()" href="javascript:void(0)">
-            <i class="fas fa-plus"></i> Add Instructional Material
-        </a>
-        <br><br>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Manage Instructional Materials</h3>
-            </div>
-            <div class="card-body">
-                <!-- INSTRUCTIONAL MATERIALS TABLE -->
-                <table class="table table-bordered table-striped" id="InstructionalMaterialsTable">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Actions</th>
-                            <th>Code</th>
-                            <th>Title</th>
-                            <th>Authors</th>
-                            <th>Category</th>
-                            <th>College</th>
-                            <th>Publisher</th>
-                            <th>Edition</th>
-                            <th>ISBN</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <!-- INSTRUCTIONAL MATERIALS TABLE -->
-            </div>
-        </div>
-    </div>
-    <br>
-    <!-- ADD INSTRUCTIONAL MATERIAL MODAL -->
-    <div class="modal fade" id="AddInstructionalMaterialModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Instructional Material</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- ADD INSTRUCTIONAL MATERIAL FORM -->
-                    <form id="AddInstructionalMaterialForm" method="POST">
-                        @csrf
-                        <div class="container-fluid">
-                            <div class="card card-default">
-                                <div class="row">
-                                    <!-- LEFT SIDE -->
-                                    <div class="col-md-6">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="code">Code</label>
-                                                <input type="text" class="form-control" name="code"
-                                                    placeholder="Enter Code" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="title">Title</label>
-                                                <input type="text" class="form-control" name="title"
-                                                    placeholder="Enter Title" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="authors">Authors</label>
-                                                <select multiple="multiple" class="select2 form-control" id="ChooseAuthors"
-                                                    name="authors[]" data-placeholder="Select Authors"
-                                                    style="width: 100%;" required>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="category">Category</label>
-                                                <select class="select2 form-control" id="ChooseCategory" name="category"
-                                                    data-placeholder="Select Category" style="width: 100%;" required>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="college">College</label>
-                                                <select class="select2 form-control" name="college"
-                                                    data-placeholder="Select College" style="width: 100%;">
-                                                    <option value="" disabled selected>Select College</option>
-                                                    <option value=" "></option>
-                                                    <option>College of Agriculture</option>
-                                                    <option>College of Arts and Sciences</option>
-                                                    <option>College of Business and Management</option>
-                                                    <option>College of Education</option>
-                                                    <option>College of Engineering</option>
-                                                    <option>College of Forestry and Environmental Sciences
-                                                    </option>
-                                                    <option>College of Human Ecology</option>
-                                                    <option>College of Information Sciences and Computing
-                                                    </option>
-                                                    <option>College of Nursing</option>
-                                                    <option>College of Veterinary Medicine</option>
-                                                </select>
+        <!-- ADD INSTRUCTIONAL MATERIAL MODAL -->
+        <div class="modal fade" id="AddInstructionalMaterialModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Instructional Material</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- ADD INSTRUCTIONAL MATERIAL FORM -->
+                        <form id="AddInstructionalMaterialForm" method="POST">
+                            @csrf
+                            <div class="container-fluid">
+                                <div class="card card-default">
+                                    <div class="row">
+                                        <!-- LEFT SIDE -->
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="code">Code</label>
+                                                    <input type="text" class="form-control" name="code"
+                                                        placeholder="Enter Code" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="title">Title</label>
+                                                    <input type="text" class="form-control" name="title"
+                                                        placeholder="Enter Title" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="authors">Authors</label>
+                                                    <select multiple="multiple" class="select2 form-control"
+                                                        id="ChooseAuthors" name="authors[]"
+                                                        data-placeholder="Select Authors" style="width: 100%;" required>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="category">Category</label>
+                                                    <select class="select2 form-control" id="ChooseCategory"
+                                                        name="category" data-placeholder="Select Category"
+                                                        style="width: 100%;" required>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="college">College</label>
+                                                    <select class="select2 form-control" name="college"
+                                                        data-placeholder="Select College" style="width: 100%;">
+                                                        <option value="" disabled selected>Select College</option>
+                                                        <option value=" "></option>
+                                                        <option>College of Agriculture</option>
+                                                        <option>College of Arts and Sciences</option>
+                                                        <option>College of Business and Management</option>
+                                                        <option>College of Education</option>
+                                                        <option>College of Engineering</option>
+                                                        <option>College of Forestry and Environmental Sciences
+                                                        </option>
+                                                        <option>College of Human Ecology</option>
+                                                        <option>College of Information Sciences and Computing
+                                                        </option>
+                                                        <option>College of Nursing</option>
+                                                        <option>College of Veterinary Medicine</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- LEFT SIDE -->
-                                    <!-- RIGHT SIDE -->
-                                    <div class="col-md-6">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="publisher">Publisher</label>
-                                                <select class="select2 form-control" name="publisher"
-                                                    data-placeholder="Select Publisher" style="width: 100%;">
-                                                    <option value="" disabled selected>Select Publisher</option>
-                                                    <option value=" "></option>
-                                                    <option>University Press</option>
-                                                    <option>Consigned Material</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="edition">Edition</label>
-                                                <input type="text" class="form-control" name="edition"
-                                                    placeholder="Enter Edition">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="isbn">ISBN</label>
-                                                <input type="text" class="form-control" name="isbn"
-                                                    placeholder="Enter ISBN">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="description">Description</label>
-                                                <textarea type="text" class="form-control" name="description"
-                                                    placeholder="Enter Description" style="height: 124px;"></textarea>
+                                        <!-- LEFT SIDE -->
+                                        <!-- RIGHT SIDE -->
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="publisher">Publisher</label>
+                                                    <select class="select2 form-control" name="publisher"
+                                                        data-placeholder="Select Publisher" style="width: 100%;">
+                                                        <option value="" disabled selected>Select Publisher</option>
+                                                        <option value=" "></option>
+                                                        <option>University Press</option>
+                                                        <option>Consigned Material</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="edition">Edition</label>
+                                                    <input type="text" class="form-control" name="edition"
+                                                        placeholder="Enter Edition">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="isbn">ISBN</label>
+                                                    <input type="text" class="form-control" name="isbn"
+                                                        placeholder="Enter ISBN">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="description">Description</label>
+                                                    <textarea type="text" class="form-control" name="description"
+                                                        placeholder="Enter Description"
+                                                        style="height: 124px;"></textarea>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- RIGHT SIDE -->
                                     </div>
-                                    <!-- RIGHT SIDE -->
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger"
+                                        onClick="hideAddInstructionalMaterialModal()"
+                                        href="javascript:void(0)">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button type="button" class="btn btn-danger"
-                                    onClick="hideAddInstructionalMaterialModal()"
-                                    href="javascript:void(0)">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Add</button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- ADD INSTRUCTIONAL MATERIAL FORM -->
+                        </form>
+                        <!-- ADD INSTRUCTIONAL MATERIAL FORM -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- ADD INSTRUCTIONAL MATERIAL MODAL -->
-    <!-- EDIT INSTRUCTIONAL MATERIAL MODAL -->
-    <div class="modal fade" id="EditInstructionalMaterialModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Instructional Material</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- EDIT INSTRUCTIONAL MATERIAL FORM -->
-                    <form id="EditInstructionalMaterialForm" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" id="InstructionalMaterialId" name="instructional_material_id">
-                        <div class="container-fluid">
-                            <div class="card card-default">
-                                <div class="row">
-                                    <!-- LEFT SIDE -->
-                                    <div class="col-md-6">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="code">Code</label>
-                                                <input type="text" class="form-control" id="EditCode" name="code"
-                                                    placeholder="Enter Code" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="title">Title</label>
-                                                <input type="text" class="form-control" id="EditTitle" name="title"
-                                                    placeholder="Enter Title" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="authors">Authors</label>
-                                                <select multiple="multiple" class="select2 form-control"
-                                                    id="EditAuthors" name="authors[]" data-placeholder="Select Authors"
-                                                    style="width: 100%;" required>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="category">Category</label>
-                                                <select class="select2 form-control" id="EditCategory" name="category"
-                                                    data-placeholder="Select Category" style="width: 100%;" required>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="college">College</label>
-                                                <select class="select2 form-control" id="EditCollege" name="college"
-                                                    data-placeholder="Select College" style="width: 100%;">
-                                                    <option value="" disabled selected>Select College</option>
-                                                    <option value=" "></option>
-                                                    <option>College of Agriculture</option>
-                                                    <option>College of Arts and Sciences</option>
-                                                    <option>College of Business and Management</option>
-                                                    <option>College of Education</option>
-                                                    <option>College of Engineering</option>
-                                                    <option>College of Forestry and Environmental Sciences
-                                                    </option>
-                                                    <option>College of Human Ecology</option>
-                                                    <option>College of Information Sciences and Computing
-                                                    </option>
-                                                    <option>College of Nursing</option>
-                                                    <option>College of Veterinary Medicine</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- LEFT SIDE -->
-                                    <!-- RIGHT SIDE -->
-                                    <div class="col-md-6">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="publisher">Publisher</label>
-                                                <select class="select2 form-control" id="EditPublisher" name="publisher"
-                                                    data-placeholder="Select Publisher" style="width: 100%;">
-                                                    <option value="" disabled selected>Select Publisher</option>
-                                                    <option value=" "></option>
-                                                    <option>University Press</option>
-                                                    <option>Consigned Material</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="edition">Edition</label>
-                                                <input type="text" class="form-control" id="EditEdition" name="edition"
-                                                    placeholder="Enter Edition">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="isbn">ISBN</label>
-                                                <input type="text" class="form-control" id="EditIsbn" name="isbn"
-                                                    placeholder="Enter ISBN">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="description">Description</label>
-                                                <textarea type="text" class="form-control" id="EditDescription"
-                                                    name="description" placeholder="Enter Description"
-                                                    style="height: 124px;"></textarea>
+        <!-- ADD INSTRUCTIONAL MATERIAL MODAL -->
+        <!-- EDIT INSTRUCTIONAL MATERIAL MODAL -->
+        <div class="modal fade" id="EditInstructionalMaterialModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Instructional Material</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- EDIT INSTRUCTIONAL MATERIAL FORM -->
+                        <form id="EditInstructionalMaterialForm" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="InstructionalMaterialId" name="instructional_material_id">
+                            <div class="container-fluid">
+                                <div class="card card-default">
+                                    <div class="row">
+                                        <!-- LEFT SIDE -->
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="code">Code</label>
+                                                    <input type="text" class="form-control" id="EditCode" name="code"
+                                                        placeholder="Enter Code" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="title">Title</label>
+                                                    <input type="text" class="form-control" id="EditTitle" name="title"
+                                                        placeholder="Enter Title" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="authors">Authors</label>
+                                                    <select multiple="multiple" class="select2 form-control"
+                                                        id="EditAuthors" name="authors[]"
+                                                        data-placeholder="Select Authors" style="width: 100%;" required>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="category">Category</label>
+                                                    <select class="select2 form-control" id="EditCategory"
+                                                        name="category" data-placeholder="Select Category"
+                                                        style="width: 100%;" required>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="college">College</label>
+                                                    <select class="select2 form-control" id="EditCollege" name="college"
+                                                        data-placeholder="Select College" style="width: 100%;">
+                                                        <option value="" disabled selected>Select College</option>
+                                                        <option value=" "></option>
+                                                        <option>College of Agriculture</option>
+                                                        <option>College of Arts and Sciences</option>
+                                                        <option>College of Business and Management</option>
+                                                        <option>College of Education</option>
+                                                        <option>College of Engineering</option>
+                                                        <option>College of Forestry and Environmental Sciences
+                                                        </option>
+                                                        <option>College of Human Ecology</option>
+                                                        <option>College of Information Sciences and Computing
+                                                        </option>
+                                                        <option>College of Nursing</option>
+                                                        <option>College of Veterinary Medicine</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- LEFT SIDE -->
+                                        <!-- RIGHT SIDE -->
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="publisher">Publisher</label>
+                                                    <select class="select2 form-control" id="EditPublisher"
+                                                        name="publisher" data-placeholder="Select Publisher"
+                                                        style="width: 100%;">
+                                                        <option value="" disabled selected>Select Publisher</option>
+                                                        <option value=" "></option>
+                                                        <option>University Press</option>
+                                                        <option>Consigned Material</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="edition">Edition</label>
+                                                    <input type="text" class="form-control" id="EditEdition"
+                                                        name="edition" placeholder="Enter Edition">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="isbn">ISBN</label>
+                                                    <input type="text" class="form-control" id="EditIsbn" name="isbn"
+                                                        placeholder="Enter ISBN">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="description">Description</label>
+                                                    <textarea type="text" class="form-control" id="EditDescription"
+                                                        name="description" placeholder="Enter Description"
+                                                        style="height: 124px;"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- RIGHT SIDE -->
                                     </div>
-                                    <!-- RIGHT SIDE -->
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger"
+                                        onClick="hideEditInstructionalMaterialModal()"
+                                        href="javascript:void(0)">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button type="button" class="btn btn-danger"
-                                    onClick="hideEditInstructionalMaterialModal()"
-                                    href="javascript:void(0)">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Update</button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- EDIT INSTRUCTIONAL MATERIAL FORM -->
+                        </form>
+                        <!-- EDIT INSTRUCTIONAL MATERIAL FORM -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- EDIT INSTRUCTIONAL MATERIAL MODAL -->
-    <!-- DELETE INSTRUCTIONAL MATERIAL MODAL -->
-    <div class="modal fade" id="DeleteInstructionalMaterialModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete Instructional Material</h4>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this instructional material?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onClick="hideDeleteInstructionalMaterialModal()"
-                        href="javascript:void(0)">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="DeleteInstructionalMaterial">Delete</button>
+        <!-- EDIT INSTRUCTIONAL MATERIAL MODAL -->
+        <!-- DELETE INSTRUCTIONAL MATERIAL MODAL -->
+        <div class="modal fade" id="DeleteInstructionalMaterialModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Instructional Material</h4>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this instructional material?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="hideDeleteInstructionalMaterialModal()"
+                            href="javascript:void(0)">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="DeleteInstructionalMaterial">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -514,14 +521,17 @@
         });
     }
     $(document).ready(function() {
-        $('#InstructionalMaterialsTable').DataTable({
+        var table = $('#InstructionalMaterialsTable').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,
             "ordering": false,
             "info": true,
-            "autoWidth": true,
+            "autoWidth": false,
             "responsive": true,
+            "scrollX": true,
+            "scrollY": true,
+            "scrollCollapse": false,
             "buttons": ["copy", "excel", "pdf", "print"],
             "pageLength": 8
         }).buttons().container().appendTo('#InstructionalMaterialsTable_wrapper .col-md-6:eq(0)');
@@ -530,6 +540,14 @@
         $('#AddInstructionalMaterialModal').on('hidden.bs.modal', function(e) {
             $('#AddInstructionalMaterialForm')[0].reset();
             $('#AddInstructionalMaterialModal select').val(null).trigger('change');
+        });
+        var previousWidth = $(window).width();
+        $(window).on('resize', function() {
+            var currentWidth = $(window).width();
+            if (currentWidth !== previousWidth) {
+                refreshInstructionalMaterialsTable();
+                previousWidth = currentWidth;
+            }
         });
     });
     </script>
