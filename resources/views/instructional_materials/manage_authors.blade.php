@@ -15,151 +15,153 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 
-<body>
-    <div class="container-fluid">
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <div class="container-fluid">
+            <br>
+            <a class="btn btn-primary" onClick="showAddAuthorModal()" href="javascript:void(0)">
+                <i class="fas fa-plus"></i> Add Author
+            </a>
+            <br><br>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Manage Authors</h3>
+                </div>
+                <div class="card-body">
+                    <!-- AUTHORS TABLE -->
+                    <table class="table table-bordered table-striped" id="AuthorsTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Actions</th>
+                                <th>Author Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <!-- AUTHORS TABLE -->
+                </div>
+            </div>
+        </div>
         <br>
-        <a class="btn btn-primary" onClick="showAddAuthorModal()" href="javascript:void(0)">
-            <i class="fas fa-plus"></i> Add Author
-        </a>
-        <br><br>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Manage Authors</h3>
-            </div>
-            <div class="card-body">
-                <!-- AUTHORS TABLE -->
-                <table class="table table-bordered table-striped" id="AuthorsTable">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Actions</th>
-                            <th>Author Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <!-- AUTHORS TABLE -->
-            </div>
-        </div>
-    </div>
-    <br>
-    <!-- ADD AUTHOR MODAL -->
-    <div class="modal fade" id="AddAuthorModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Author</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- ADD AUTHOR FORM -->
-                    <form id="AddAuthorForm" method="POST">
-                        @csrf
-                        <div class="container-fluid">
-                            <div class="card card-default">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="first_name">First Name</label>
-                                                <input type="text" class="form-control" name="first_name"
-                                                    placeholder="Enter First Name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="middle_name">Middle Name</label>
-                                                <input type="text" class="form-control" name="middle_name"
-                                                    placeholder="Enter Middle Name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="last_name">Last Name</label>
-                                                <input type="text" class="form-control" name="last_name"
-                                                    placeholder="Enter Last Name" required>
+        <!-- ADD AUTHOR MODAL -->
+        <div class="modal fade" id="AddAuthorModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Author</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- ADD AUTHOR FORM -->
+                        <form id="AddAuthorForm" method="POST">
+                            @csrf
+                            <div class="container-fluid">
+                                <div class="card card-default">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="first_name">First Name</label>
+                                                    <input type="text" class="form-control" name="first_name"
+                                                        placeholder="Enter First Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="middle_name">Middle Name</label>
+                                                    <input type="text" class="form-control" name="middle_name"
+                                                        placeholder="Enter Middle Name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="last_name">Last Name</label>
+                                                    <input type="text" class="form-control" name="last_name"
+                                                        placeholder="Enter Last Name" required>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" onClick="hideAddAuthorModal()"
+                                        href="javascript:void(0)">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                </div>
                             </div>
-                            <div class="text-right">
-                                <button type="button" class="btn btn-danger" onClick="hideAddAuthorModal()"
-                                    href="javascript:void(0)">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Add</button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- ADD AUTHOR FORM -->
+                        </form>
+                        <!-- ADD AUTHOR FORM -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- ADD AUTHOR MODAL -->
-    <!-- EDIT AUTHOR MODAL -->
-    <div class="modal fade" id="EditAuthorModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Author</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- EDIT AUTHOR FORM -->
-                    <form id="EditAuthorForm" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" id="AuthorId" name="author_id">
-                        <div class="container-fluid">
-                            <div class="card card-default">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="first_name">First Name</label>
-                                                <input type="text" class="form-control" id="EditFirstName" name="first_name"
-                                                    placeholder="Enter First Name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="middle_name">Middle Name</label>
-                                                <input type="text" class="form-control" id="EditMiddleName"
-                                                    name="middle_name" placeholder="Enter Middle Name">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="last_name">Last Name</label>
-                                                <input type="text" class="form-control" id="EditLastName" name="last_name"
-                                                    placeholder="Enter Last Name" required>
+        <!-- ADD AUTHOR MODAL -->
+        <!-- EDIT AUTHOR MODAL -->
+        <div class="modal fade" id="EditAuthorModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Author</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- EDIT AUTHOR FORM -->
+                        <form id="EditAuthorForm" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="AuthorId" name="author_id">
+                            <div class="container-fluid">
+                                <div class="card card-default">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="first_name">First Name</label>
+                                                    <input type="text" class="form-control" id="EditFirstName"
+                                                        name="first_name" placeholder="Enter First Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="middle_name">Middle Name</label>
+                                                    <input type="text" class="form-control" id="EditMiddleName"
+                                                        name="middle_name" placeholder="Enter Middle Name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="last_name">Last Name</label>
+                                                    <input type="text" class="form-control" id="EditLastName"
+                                                        name="last_name" placeholder="Enter Last Name" required>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" onClick="hideEditAuthorModal()"
+                                        href="javascript:void(0)">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
                             </div>
-                            <div class="text-right">
-                                <button type="button" class="btn btn-danger" onClick="hideEditAuthorModal()"
-                                    href="javascript:void(0)">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Update</button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- EDIT AUTHOR FORM -->
+                        </form>
+                        <!-- EDIT AUTHOR FORM -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- EDIT AUTHOR MODAL -->
-    <!-- DELETE AUTHOR MODAL -->
-    <div class="modal fade" id="DeleteAuthorModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete Author</h4>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this author?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onClick="hideDeleteAuthorModal()"
-                        href="javascript:void(0)">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="DeleteAuthor">Delete</button>
+        <!-- EDIT AUTHOR MODAL -->
+        <!-- DELETE AUTHOR MODAL -->
+        <div class="modal fade" id="DeleteAuthorModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Author</h4>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this author?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="hideDeleteAuthorModal()"
+                            href="javascript:void(0)">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="DeleteAuthor">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- DELETE AUTHOR MODAL -->
     </div>
-    <!-- DELETE AUTHOR MODAL -->
     <script>
     function showAddAuthorModal() {
         $('#AddAuthorModal').modal('show');
@@ -296,8 +298,11 @@
             "searching": true,
             "ordering": false,
             "info": true,
-            "autoWidth": true,
+            "autoWidth": false,
             "responsive": true,
+            "scrollX": true,
+            "scrollY": true,
+            "scrollCollapse": false,
             "buttons": ["copy", "excel", "pdf", "print"],
             "pageLength": 8
         }).buttons().container().appendTo('#AuthorsTable_wrapper .col-md-6:eq(0)');
@@ -305,6 +310,14 @@
         setInterval(refreshAuthorsTable, 60000);
         $('#AddAuthorModal').on('hidden.bs.modal', function(e) {
             $('#AddAuthorForm')[0].reset();
+        });
+        var previousWidth = $(window).width();
+        $(window).on('resize', function() {
+            var currentWidth = $(window).width();
+            if (currentWidth !== previousWidth) {
+                refreshAuthorsTable();
+                previousWidth = currentWidth;
+            }
         });
     });
     </script>

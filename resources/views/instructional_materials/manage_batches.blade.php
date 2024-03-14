@@ -15,214 +15,219 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 
-<body>
-    <div class="container-fluid">
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <div class="container-fluid">
+            <br>
+            <a class="btn btn-primary" onClick="showAddBatchModal()" href="javascript:void(0)">
+                <i class="fas fa-plus"></i> Add Batch
+            </a>
+            <br><br>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Manage Batches</h3>
+                </div>
+                <div class="card-body">
+                    <!-- BATCHES TABLE -->
+                    <table class="table table-bordered table-striped" id="BatchesTable">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Actions</th>
+                                <th>Instructional Material</th>
+                                <th>Batch Name</th>
+                                <th>Production Date</th>
+                                <th>Production Cost</th>
+                                <th>Price</th>
+                                <th>Beginning Quantity</th>
+                                <th>Available Stocks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <!-- BATCHES TABLE -->
+                </div>
+            </div>
+        </div>
         <br>
-        <a class="btn btn-primary" onClick="showAddBatchModal()" href="javascript:void(0)">
-            <i class="fas fa-plus"></i> Add Batch
-        </a>
-        <br><br>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Manage Batches</h3>
-            </div>
-            <div class="card-body">
-                <!-- BATCHES TABLE -->
-                <table class="table table-bordered table-striped" id="BatchesTable">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Actions</th>
-                            <th>Instructional Material</th>
-                            <th>Batch Name</th>
-                            <th>Production Date</th>
-                            <th>Production Cost</th>
-                            <th>Price</th>
-                            <th>Beginning Quantity</th>
-                            <th>Available Stocks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <!-- BATCHES TABLE -->
-            </div>
-        </div>
-    </div>
-    <br>
-    <!-- ADD BATCH MODAL -->
-    <div class="modal fade" id="AddBatchModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Batch</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- ADD BATCH FORM -->
-                    <form id="AddBatchForm" method="POST">
-                        @csrf
-                        <div class="container-fluid">
-                            <div class="card card-default">
-                                <div class="row">
-                                    <!-- LEFT SIDE -->
-                                    <div class="col-md-6">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="instructional_material">Instructional Material</label>
-                                                <select class="select2 form-control" id="ChooseInstructionalMaterial"
-                                                    name="instructional_material"
-                                                    data-placeholder="Select Instructional Material"
-                                                    style="width: 100%;" required>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="name">Batch Name</label>
-                                                <input type="text" class="form-control" name="name"
-                                                    placeholder="Enter Batch Name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="production_date">Production Date</label>
-                                                <input type="date" class="form-control" name="production_date" required>
+        <!-- ADD BATCH MODAL -->
+        <div class="modal fade" id="AddBatchModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Batch</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- ADD BATCH FORM -->
+                        <form id="AddBatchForm" method="POST">
+                            @csrf
+                            <div class="container-fluid">
+                                <div class="card card-default">
+                                    <div class="row">
+                                        <!-- LEFT SIDE -->
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="instructional_material">Instructional Material</label>
+                                                    <select class="select2 form-control"
+                                                        id="ChooseInstructionalMaterial" name="instructional_material"
+                                                        data-placeholder="Select Instructional Material"
+                                                        style="width: 100%;" required>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="name">Batch Name</label>
+                                                    <input type="text" class="form-control" name="name"
+                                                        placeholder="Enter Batch Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="production_date">Production Date</label>
+                                                    <input type="date" class="form-control" name="production_date"
+                                                        required>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- LEFT SIDE -->
-                                    <!-- RIGHT SIDE -->
-                                    <div class="col-md-6">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="production_cost">Production Cost</label>
-                                                <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
-                                                    class="form-control" name="production_cost"
-                                                    placeholder="Enter Production Cost" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="price">Price</label>
-                                                <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
-                                                    class="form-control" name="price" placeholder="Enter Price"
-                                                    required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="beginning_quantity">Beginning Quantity</label>
-                                                <input type="text" oninput="NumbersOnly(this)" class="form-control"
-                                                    name="beginning_quantity" placeholder="Enter Beginning Quantity"
-                                                    required>
+                                        <!-- LEFT SIDE -->
+                                        <!-- RIGHT SIDE -->
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="production_cost">Production Cost</label>
+                                                    <input type="text" oninput="AmountOnly(this)"
+                                                        onpaste="return false;" class="form-control"
+                                                        name="production_cost" placeholder="Enter Production Cost"
+                                                        required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="price">Price</label>
+                                                    <input type="text" oninput="AmountOnly(this)"
+                                                        onpaste="return false;" class="form-control" name="price"
+                                                        placeholder="Enter Price" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="beginning_quantity">Beginning Quantity</label>
+                                                    <input type="text" oninput="NumbersOnly(this)" class="form-control"
+                                                        name="beginning_quantity" placeholder="Enter Beginning Quantity"
+                                                        required>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- RIGHT SIDE -->
                                     </div>
-                                    <!-- RIGHT SIDE -->
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" onClick="hideAddBatchModal()"
+                                        href="javascript:void(0)">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button type="button" class="btn btn-danger" onClick="hideAddBatchModal()"
-                                    href="javascript:void(0)">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Add</button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- ADD BATCH FORM -->
+                        </form>
+                        <!-- ADD BATCH FORM -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- ADD BATCH MODAL -->
-    <!-- EDIT BATCH MODAL -->
-    <div class="modal fade" id="EditBatchModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Batch</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- EDIT BATCH FORM -->
-                    <form id="EditBatchForm" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" id="BatchId" name="batch_id">
-                        <div class="container-fluid">
-                            <div class="card card-default">
-                                <div class="row">
-                                    <!-- LEFT SIDE -->
-                                    <div class="col-md-6">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="instructional_material">Instructional Material</label>
-                                                <select class="select2 form-control" id="EditInstructionalMaterial"
-                                                    name="instructional_material"
-                                                    data-placeholder="Select Instructional Material"
-                                                    style="width: 100%;" required>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="name">Batch Name</label>
-                                                <input type="text" class="form-control" id="EditName" name="name"
-                                                    placeholder="Enter Batch Name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="production_date">Production Date</label>
-                                                <input type="date" class="form-control" id="EditProductionDate"
-                                                    name="production_date" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- LEFT SIDE -->
-                                    <!-- RIGHT SIDE -->
-                                    <div class="col-md-6">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="production_cost">Production Cost</label>
-                                                <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
-                                                    class="form-control" id="EditProductionCost" name="production_cost"
-                                                    placeholder="Enter Production Cost" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="price">Price</label>
-                                                <input type="text" oninput="AmountOnly(this)" onpaste="return false;"
-                                                    class="form-control" id="EditPrice" name="price"
-                                                    placeholder="Enter Price" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="beginning_quantity">Beginning Quantity</label>
-                                                <input type="text" oninput="NumbersOnly(this)" class="form-control"
-                                                    id="EditBeginningQuantity" name="beginning_quantity"
-                                                    placeholder="Enter Beginning Quantity" required>
+        <!-- ADD BATCH MODAL -->
+        <!-- EDIT BATCH MODAL -->
+        <div class="modal fade" id="EditBatchModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Batch</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- EDIT BATCH FORM -->
+                        <form id="EditBatchForm" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="BatchId" name="batch_id">
+                            <div class="container-fluid">
+                                <div class="card card-default">
+                                    <div class="row">
+                                        <!-- LEFT SIDE -->
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="instructional_material">Instructional Material</label>
+                                                    <select class="select2 form-control" id="EditInstructionalMaterial"
+                                                        name="instructional_material"
+                                                        data-placeholder="Select Instructional Material"
+                                                        style="width: 100%;" required>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="name">Batch Name</label>
+                                                    <input type="text" class="form-control" id="EditName" name="name"
+                                                        placeholder="Enter Batch Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="production_date">Production Date</label>
+                                                    <input type="date" class="form-control" id="EditProductionDate"
+                                                        name="production_date" required>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- LEFT SIDE -->
+                                        <!-- RIGHT SIDE -->
+                                        <div class="col-md-6">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="production_cost">Production Cost</label>
+                                                    <input type="text" oninput="AmountOnly(this)"
+                                                        onpaste="return false;" class="form-control"
+                                                        id="EditProductionCost" name="production_cost"
+                                                        placeholder="Enter Production Cost" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="price">Price</label>
+                                                    <input type="text" oninput="AmountOnly(this)"
+                                                        onpaste="return false;" class="form-control" id="EditPrice"
+                                                        name="price" placeholder="Enter Price" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="beginning_quantity">Beginning Quantity</label>
+                                                    <input type="text" oninput="NumbersOnly(this)" class="form-control"
+                                                        id="EditBeginningQuantity" name="beginning_quantity"
+                                                        placeholder="Enter Beginning Quantity" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- RIGHT SIDE -->
                                     </div>
-                                    <!-- RIGHT SIDE -->
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-danger" onClick="hideEditBatchModal()"
+                                        href="javascript:void(0)">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button type="button" class="btn btn-danger" onClick="hideEditBatchModal()"
-                                    href="javascript:void(0)">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Update</button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- EDIT BATCH FORM -->
+                        </form>
+                        <!-- EDIT BATCH FORM -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- EDIT BATCH MODAL -->
-    <!-- DELETE BATCH MODAL -->
-    <div class="modal fade" id="DeleteBatchModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete Batch</h4>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this batch?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onClick="hideDeleteBatchModal()"
-                        href="javascript:void(0)">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="DeleteBatch">Delete</button>
+        <!-- EDIT BATCH MODAL -->
+        <!-- DELETE BATCH MODAL -->
+        <div class="modal fade" id="DeleteBatchModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Batch</h4>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this batch?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onClick="hideDeleteBatchModal()"
+                            href="javascript:void(0)">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="DeleteBatch">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- DELETE BATCH MODAL -->
     </div>
-    <!-- DELETE BATCH MODAL -->
     <script>
     function showAddBatchModal() {
         $.ajax({
@@ -271,7 +276,7 @@
                         $('#EditName').val(batch.name);
                         var productionDate = new Date(batch.production_date);
                         var formattedProductionDate = productionDate.toISOString().split('T')[
-                        0];
+                            0];
                         $('#EditProductionDate').val(formattedProductionDate);
                         $('#EditProductionCost').val(batch.production_cost.toFixed(2));
                         $('#EditPrice').val(batch.price.toFixed(2));
@@ -429,8 +434,11 @@
             "searching": true,
             "ordering": false,
             "info": true,
-            "autoWidth": true,
+            "autoWidth": false,
             "responsive": true,
+            "scrollX": true,
+            "scrollY": true,
+            "scrollCollapse": false,
             "buttons": ["copy", "excel", "pdf", "print"],
             "pageLength": 8
         }).buttons().container().appendTo('#BatchesTable_wrapper .col-md-6:eq(0)');
@@ -439,6 +447,14 @@
         $('#AddBatchModal').on('hidden.bs.modal', function(e) {
             $('#AddBatchForm')[0].reset();
             $('#AddBatchModal select').val(null).trigger('change');
+        });
+        var previousWidth = $(window).width();
+        $(window).on('resize', function() {
+            var currentWidth = $(window).width();
+            if (currentWidth !== previousWidth) {
+                refreshBatchesTable();
+                previousWidth = currentWidth;
+            }
         });
     });
     </script>

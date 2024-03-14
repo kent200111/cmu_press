@@ -298,8 +298,8 @@
                 </div>
             </div>
         </div>
+        <!-- DELETE INSTRUCTIONAL MATERIAL MODAL -->
     </div>
-    <!-- DELETE INSTRUCTIONAL MATERIAL MODAL -->
     <script>
     function showAddInstructionalMaterialModal() {
         $.ajax({
@@ -521,7 +521,7 @@
         });
     }
     $(document).ready(function() {
-        var table = $('#InstructionalMaterialsTable').DataTable({
+        $('#InstructionalMaterialsTable').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,
